@@ -1,0 +1,2289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HIGER — Donation Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<!-- canvas-confetti: Copy success micro-interaction -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --bg3: #181818;
+    --card: rgba(255,255,255,0.035);
+    --card-border: rgba(255,255,255,0.07);
+    --blue: #00D4FF;
+    --blue-dim: rgba(0,212,255,0.12);
+    --blue-glow: rgba(0,212,255,0.25);
+    --gold: #FFD700;
+    --gold-dim: rgba(255,215,0,0.12);
+    --text: #e8e8e8;
+    --muted: #888;
+    --danger: #FF3B3B;
+    --danger-dim: rgba(255,59,59,0.15);
+    --safepal: #1B8AF5;
+    --safepal-dim: rgba(27,138,245,0.13);
+    --mm: #F6851B;
+    --mm-dim: rgba(246,133,27,0.13);
+    --pay: #A855F7;
+    --pay-dim: rgba(168,85,247,0.13);
+    --green: #00C864;
+    --green-dim: rgba(0,200,100,0.13);
+    --radius: 16px;
+    --font-head: 'Exo 2', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* === BACKGROUND GRID === */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    top: -200px; left: 50%;
+    transform: translateX(-50%);
+    width: 800px; height: 800px;
+    background: radial-gradient(ellipse, rgba(0,212,255,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ============================================================
+   * [NEW] PAGE LOADER
+   * ============================================================ */
+  #pageLoader {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: #0a0a0a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+  }
+  #pageLoader.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .loader-logo {
+    font-family: var(--font-head);
+    font-size: 52px;
+    font-weight: 900;
+    letter-spacing: 14px;
+    color: #fff;
+    text-shadow: 0 0 40px rgba(0,212,255,0.5), 0 0 80px rgba(0,212,255,0.2);
+    animation: loaderPulse 1.5s ease-in-out infinite;
+    position: relative;
+  }
+  .loader-logo span { color: var(--blue); }
+  @keyframes loaderPulse {
+    0%, 100% { opacity: 1; text-shadow: 0 0 40px rgba(0,212,255,0.5), 0 0 80px rgba(0,212,255,0.2); }
+    50% { opacity: 0.7; text-shadow: 0 0 70px rgba(0,212,255,0.9), 0 0 120px rgba(0,212,255,0.4); }
+  }
+  .loader-bar-wrap {
+    width: 200px;
+    height: 2px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .loader-bar {
+    height: 100%;
+    background: var(--blue);
+    border-radius: 4px;
+    box-shadow: 0 0 10px var(--blue);
+    animation: loaderScan 1.4s ease-in-out infinite;
+  }
+  @keyframes loaderScan {
+    0% { width: 0%; margin-left: 0; }
+    50% { width: 100%; margin-left: 0; }
+    100% { width: 0%; margin-left: 100%; }
+  }
+  .loader-text {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ============================================================
+   * [NEW] GAS TRACKER WIDGET (floating bottom-right)
+   * ============================================================ */
+  #gasWidget {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 8000;
+    background: rgba(14,14,14,0.95);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 14px 16px;
+    min-width: 220px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 20px rgba(0,212,255,0.06);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: all 0.3s ease;
+  }
+  #gasWidget:hover {
+    border-color: rgba(0,212,255,0.2);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 30px rgba(0,212,255,0.1);
+  }
+  #gasWidget.collapsed { min-width: auto; }
+  #gasWidget.collapsed .gas-body { display: none; }
+
+  .gas-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .gas-header-left {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .gas-title-text {
+    font-family: var(--font-head);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .gas-live-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 6px var(--green);
+    animation: gasLivePulse 2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  .gas-live-dot.error { background: var(--danger); box-shadow: 0 0 6px var(--danger); animation: none; }
+  @keyframes gasLivePulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  .gas-collapse-btn {
+    background: none; border: none; cursor: pointer;
+    color: var(--muted); font-size: 10px;
+    padding: 2px 4px; border-radius: 4px;
+    transition: color 0.2s;
+    line-height: 1;
+  }
+  .gas-collapse-btn:hover { color: var(--text); }
+
+  .gas-body { display: block; }
+
+  .gas-chain-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 9px;
+    padding-bottom: 9px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .gas-chain-row:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+
+  .gas-chain-icon {
+    width: 24px; height: 24px;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; flex-shrink: 0;
+    font-family: var(--font-head); font-weight: 800;
+  }
+  .gas-chain-icon.eth { background: var(--blue-dim); color: var(--blue); }
+  .gas-chain-icon.bnb { background: var(--gold-dim); color: var(--gold); }
+  .gas-chain-icon.matic { background: rgba(130,71,229,0.15); color: #a855f7; }
+
+  .gas-chain-meta { flex: 1; }
+  .gas-chain-name {
+    font-size: 10px; font-weight: 600;
+    color: var(--muted); text-transform: uppercase;
+    letter-spacing: 0.5px; line-height: 1;
+    margin-bottom: 2px;
+  }
+  .gas-values {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+  .gas-val {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 1px 6px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.05);
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .gas-val.low { color: var(--green); border-color: rgba(0,200,100,0.2); background: rgba(0,200,100,0.06); }
+  .gas-val.med { color: var(--gold); border-color: rgba(255,215,0,0.2); background: rgba(255,215,0,0.06); }
+  .gas-val.high { color: var(--danger); border-color: rgba(255,59,59,0.2); background: rgba(255,59,59,0.06); }
+
+  .gas-gwei-label {
+    font-size: 9px; color: var(--muted);
+    font-family: var(--font-mono);
+    margin-left: 1px;
+  }
+
+  .gas-footer {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+  .gas-refresh-text {
+    font-size: 9px; color: #444;
+    font-family: var(--font-mono);
+  }
+  .gas-refresh-btn {
+    background: none; border: none; cursor: pointer;
+    color: #444; font-size: 11px;
+    transition: color 0.2s, transform 0.3s;
+    padding: 2px;
+  }
+  .gas-refresh-btn:hover { color: var(--blue); }
+  .gas-refresh-btn.spinning { animation: spin 0.8s linear infinite; }
+
+  /* ============================================================
+   * [NEW] SAFEPAL TRUST BANNER (full-width above wallet list)
+   * ============================================================ */
+  .safepal-trust-banner {
+    position: relative;
+    margin-bottom: 28px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid rgba(27,138,245,0.25);
+    background: linear-gradient(135deg,
+      rgba(27,138,245,0.07) 0%,
+      rgba(0,212,255,0.04) 50%,
+      rgba(27,138,245,0.07) 100%);
+  }
+  .safepal-trust-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(27,138,245,0.08) 50%,
+      transparent 100%);
+    background-size: 200% 100%;
+    animation: trustBannerShine 4s linear infinite;
+  }
+  @keyframes trustBannerShine {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  .safepal-trust-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 24px;
+    flex-wrap: wrap;
+  }
+  .trust-shield-wrap {
+    width: 46px; height: 46px;
+    border-radius: 12px;
+    background: rgba(27,138,245,0.15);
+    border: 1px solid rgba(27,138,245,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: var(--safepal);
+    flex-shrink: 0;
+    box-shadow: 0 0 20px rgba(27,138,245,0.2);
+    animation: shieldPulse 3s ease-in-out infinite;
+  }
+  @keyframes shieldPulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(27,138,245,0.2); }
+    50% { box-shadow: 0 0 35px rgba(27,138,245,0.45); }
+  }
+  .trust-text-wrap { flex: 1; min-width: 200px; }
+  .trust-headline {
+    font-family: var(--font-head);
+    font-size: 13px; font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.3px;
+    margin-bottom: 2px;
+  }
+  .trust-subline {
+    font-size: 11px; color: rgba(200,220,255,0.55);
+    line-height: 1.5;
+  }
+  .trust-pills {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    align-items: center; flex-shrink: 0;
+  }
+  .trust-pill {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 9px; font-weight: 700;
+    font-family: var(--font-head);
+    letter-spacing: 0.5px; text-transform: uppercase;
+    border: 1px solid rgba(27,138,245,0.3);
+    background: rgba(27,138,245,0.1);
+    color: var(--safepal);
+    white-space: nowrap;
+  }
+
+  /* ============================================================
+   * [NEW] NETWORK MISMATCH BANNER (inside Web3 modal)
+   * ============================================================ */
+  #networkMismatchBanner {
+    display: none;
+    margin-bottom: 16px;
+    padding: 12px 16px;
+    background: rgba(255,165,0,0.08);
+    border: 1px solid rgba(255,165,0,0.4);
+    border-radius: 12px;
+    animation: warningPulse 2s ease-in-out infinite;
+  }
+  #networkMismatchBanner.visible { display: flex; align-items: flex-start; gap: 10px; }
+  .nmb-icon { color: #FFA500; font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .nmb-text { flex: 1; }
+  .nmb-title {
+    font-family: var(--font-head); font-size: 12px; font-weight: 800;
+    color: #FFA500; letter-spacing: 0.3px; margin-bottom: 3px;
+  }
+  .nmb-sub { font-size: 11px; color: rgba(255,165,0,0.75); line-height: 1.5; }
+  .nmb-switch-btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    margin-top: 8px; padding: 5px 12px;
+    background: rgba(255,165,0,0.15);
+    border: 1px solid rgba(255,165,0,0.4);
+    border-radius: 8px;
+    color: #FFA500;
+    font-family: var(--font-head); font-size: 10px; font-weight: 700;
+    letter-spacing: 0.5px; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .nmb-switch-btn:hover { background: rgba(255,165,0,0.25); }
+
+  /* ============================================================
+   * [NEW] CHAIN TAG BADGE (on EVM wallet rows)
+   * ============================================================ */
+  .chain-id-badge {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: rgba(0,212,255,0.06);
+    border: 1px solid rgba(0,212,255,0.12);
+    color: rgba(0,212,255,0.5);
+    flex-shrink: 0;
+    display: none; /* shown on hover via parent */
+  }
+  .wallet-row:hover .chain-id-badge { display: inline-flex; }
+
+  /* === SCROLL FADE-IN === */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* === LAYOUT === */
+  .container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* === NAV === */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--card-border);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px; max-width: 980px; margin: 0 auto; padding: 0 20px;
+  }
+  .nav-logo {
+    font-family: var(--font-head); font-size: 22px; font-weight: 900;
+    letter-spacing: 6px; color: var(--blue); text-transform: uppercase;
+    text-decoration: none; text-shadow: 0 0 20px var(--blue-glow);
+  }
+  .nav-right { display: flex; align-items: center; gap: 16px; }
+
+  /* Language Toggle */
+  .lang-toggle {
+    display: flex; background: var(--bg3); border: 1px solid var(--card-border);
+    border-radius: 30px; overflow: hidden; cursor: pointer; user-select: none;
+  }
+  .lang-btn {
+    padding: 5px 14px; font-family: var(--font-head); font-size: 12px;
+    font-weight: 700; letter-spacing: 1px; color: var(--muted);
+    transition: all 0.25s; border-radius: 30px;
+  }
+  .lang-btn.active { background: var(--blue); color: #000; }
+
+  /* === HERO === */
+  .hero { padding: 100px 0 60px; text-align: center; position: relative; z-index: 1; }
+  .visionary-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--gold-dim); border: 1px solid rgba(255,215,0,0.3);
+    border-radius: 30px; padding: 6px 18px; font-size: 12px;
+    font-weight: 600; color: var(--gold); letter-spacing: 0.5px;
+    margin-bottom: 28px; text-transform: uppercase;
+  }
+  .hero-title {
+    font-family: var(--font-head); font-size: clamp(56px, 10vw, 96px);
+    font-weight: 900; line-height: 1; letter-spacing: 12px;
+    text-transform: uppercase; color: #fff;
+    text-shadow: 0 0 40px rgba(0,212,255,0.3), 0 0 80px rgba(0,212,255,0.1);
+    margin-bottom: 20px;
+  }
+  .hero-title span { color: var(--blue); }
+  .hero-sub {
+    font-size: 15px; color: var(--muted); max-width: 560px;
+    margin: 0 auto 36px; line-height: 1.7;
+  }
+  .cta-group { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 28px; border-radius: 12px; font-family: var(--font-head);
+    font-weight: 700; font-size: 14px; letter-spacing: 1px;
+    text-transform: uppercase; text-decoration: none;
+    cursor: pointer; border: none; transition: all 0.25s;
+  }
+  .btn-primary {
+    background: var(--blue); color: #000;
+    box-shadow: 0 0 24px var(--blue-glow);
+  }
+  .btn-primary:hover {
+    background: #2edfff; box-shadow: 0 0 40px rgba(0,212,255,0.5);
+    transform: translateY(-2px);
+  }
+  .btn-outline {
+    background: transparent; color: var(--text);
+    border: 1px solid var(--card-border);
+  }
+  .btn-outline:hover { border-color: var(--blue); color: var(--blue); transform: translateY(-2px); }
+
+  /* === STATS BAR === */
+  .stats-bar {
+    display: flex; gap: 0; background: var(--card);
+    border: 1px solid var(--card-border); border-radius: var(--radius);
+    overflow: hidden; margin-bottom: 60px;
+  }
+  .stat-item {
+    flex: 1; padding: 22px 24px; text-align: center;
+    border-right: 1px solid var(--card-border);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: var(--font-head); font-size: 28px; font-weight: 800;
+    color: var(--blue); display: block;
+  }
+  .stat-label {
+    font-size: 11px; color: var(--muted); text-transform: uppercase;
+    letter-spacing: 1px; margin-top: 2px;
+  }
+
+  /* === SECTION TITLES === */
+  .section-label {
+    font-family: var(--font-head); font-size: 11px; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase; color: var(--blue); margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: var(--font-head); font-size: clamp(22px, 4vw, 32px);
+    font-weight: 800; color: #fff; margin-bottom: 8px;
+  }
+  .section-desc { color: var(--muted); font-size: 14px; margin-bottom: 32px; }
+
+  /* === SEARCH === */
+  .search-wrap { position: relative; margin-bottom: 28px; }
+  .search-icon {
+    position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+    color: var(--muted); font-size: 15px;
+  }
+  #searchInput {
+    width: 100%; background: var(--bg3); border: 1px solid var(--card-border);
+    border-radius: 12px; padding: 14px 16px 14px 44px;
+    font-family: var(--font-body); font-size: 14px; color: var(--text);
+    outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  #searchInput::placeholder { color: var(--muted); }
+  #searchInput:focus {
+    border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-dim);
+  }
+
+  /* === ACCORDION GROUP === */
+  .wallet-group {
+    margin-bottom: 12px; border-radius: var(--radius);
+    border: 1px solid var(--card-border); overflow: hidden;
+    background: var(--card); backdrop-filter: blur(12px);
+    transition: border-color 0.25s;
+  }
+  .wallet-group:hover { border-color: rgba(0,212,255,0.2); }
+  .group-header {
+    display: flex; align-items: center; gap: 14px;
+    padding: 16px 20px; cursor: pointer; user-select: none;
+    transition: background 0.2s;
+  }
+  .group-header:hover { background: rgba(255,255,255,0.03); }
+  .group-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; flex-shrink: 0;
+  }
+  .group-icon.blue { background: var(--blue-dim); color: var(--blue); }
+  .group-icon.gold { background: var(--gold-dim); color: var(--gold); }
+  .group-icon.purple { background: rgba(150,90,255,0.12); color: #a66fff; }
+  .group-icon.green { background: rgba(0,200,100,0.12); color: #00c864; }
+  .group-icon.orange { background: rgba(255,140,0,0.12); color: #ff8c00; }
+  .group-icon.danger { background: var(--danger-dim); color: var(--danger); }
+  .group-meta { flex: 1; }
+  .group-name {
+    font-family: var(--font-head); font-weight: 700; font-size: 15px; color: #fff;
+  }
+  .group-count { font-size: 12px; color: var(--muted); margin-top: 1px; }
+  .group-chevron { color: var(--muted); font-size: 13px; transition: transform 0.3s ease; }
+  .wallet-group.open .group-chevron { transform: rotate(180deg); }
+  .group-body { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+  .wallet-group.open .group-body { max-height: 9999px; }
+  .group-body-inner { border-top: 1px solid var(--card-border); padding: 8px 0; }
+
+  /* === TESTNET WARNING === */
+  .testnet-warning {
+    margin: 12px 20px; padding: 14px 18px;
+    background: rgba(255,59,59,0.1); border: 2px solid var(--danger);
+    border-radius: 10px; display: flex; align-items: flex-start; gap: 12px;
+    animation: warningPulse 2s ease-in-out infinite;
+  }
+  @keyframes warningPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,59,59,0.3); }
+    50% { box-shadow: 0 0 0 6px rgba(255,59,59,0); }
+  }
+  .warning-icon { font-size: 22px; color: var(--danger); flex-shrink: 0; margin-top: 2px; }
+  .warning-text strong {
+    display: block; font-family: var(--font-head); font-size: 13px;
+    font-weight: 800; color: var(--danger); letter-spacing: 0.5px;
+    text-transform: uppercase; margin-bottom: 2px;
+  }
+  .warning-text span { font-size: 12px; color: rgba(255,59,59,0.8); }
+
+  /* === WALLET ROW === */
+  .wallet-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 11px 20px; transition: background 0.15s;
+  }
+  .wallet-row:hover { background: rgba(255,255,255,0.025); }
+  .wallet-row.hidden { display: none; }
+  .wallet-name {
+    min-width: 160px; max-width: 180px; font-size: 13px;
+    font-weight: 500; color: var(--text); flex-shrink: 0;
+  }
+  .wallet-addr-wrap { flex: 1; min-width: 0; }
+  .wallet-addr {
+    font-family: var(--font-mono); font-size: 11px; color: var(--muted);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block;
+  }
+  .wallet-actions { display: flex; gap: 6px; flex-shrink: 0; }
+  .icon-btn {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--card-border);
+    color: var(--muted); display: flex; align-items: center; justify-content: center;
+    font-size: 12px; cursor: pointer; transition: all 0.2s; position: relative;
+  }
+  .icon-btn:hover {
+    background: var(--blue-dim); border-color: var(--blue);
+    color: var(--blue); transform: scale(1.08);
+  }
+  .icon-btn.copied {
+    background: rgba(0,200,100,0.15); border-color: #00c864; color: #00c864;
+  }
+
+  /* === COPY TOAST === */
+  .copy-toast {
+    position: fixed; bottom: 28px; left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #1a1a1a; border: 1px solid var(--blue);
+    border-radius: 30px; padding: 10px 22px; font-size: 13px;
+    font-weight: 600; color: var(--blue); z-index: 9999;
+    opacity: 0; transition: all 0.3s; pointer-events: none;
+    display: flex; align-items: center; gap: 8px; white-space: nowrap;
+  }
+  .copy-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* === QR MODAL === */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px); z-index: 9000; display: flex;
+    align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal {
+    background: #141414; border: 1px solid var(--card-border);
+    border-radius: 20px; padding: 32px; max-width: 360px; width: 90%;
+    text-align: center; transform: scale(0.9); transition: transform 0.3s;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px var(--blue-dim);
+  }
+  .modal-overlay.open .modal { transform: scale(1); }
+  .modal-network {
+    font-family: var(--font-head); font-size: 11px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase; color: var(--blue); margin-bottom: 4px;
+  }
+  .modal-title {
+    font-family: var(--font-head); font-size: 18px; font-weight: 800;
+    color: #fff; margin-bottom: 20px;
+  }
+  .qr-wrap {
+    background: #fff; border-radius: 12px; padding: 12px;
+    display: inline-flex; margin-bottom: 18px;
+  }
+  .qr-wrap img { width: 180px; height: 180px; display: block; }
+  .modal-addr {
+    font-family: var(--font-mono); font-size: 10px; color: var(--muted);
+    word-break: break-all; background: var(--bg3); border-radius: 8px;
+    padding: 10px; margin-bottom: 16px; text-align: left;
+  }
+  .modal-close {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 9px 22px; background: var(--bg3);
+    border: 1px solid var(--card-border); border-radius: 10px;
+    color: var(--muted); font-size: 13px; cursor: pointer; transition: all 0.2s;
+  }
+  .modal-close:hover { border-color: var(--blue); color: var(--blue); }
+
+  /* === CONTACT SECTION === */
+  .section { padding: 60px 0; position: relative; z-index: 1; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 600px) {
+    .contact-grid { grid-template-columns: 1fr; }
+    .stat-item { padding: 16px 12px; }
+    .stat-num { font-size: 22px; }
+    .wallet-name { min-width: 110px; max-width: 130px; font-size: 12px; }
+    .stats-bar { flex-wrap: wrap; }
+    .stat-item { border-right: none; border-bottom: 1px solid var(--card-border); flex-basis: 50%; }
+    .stat-item:nth-child(2n) { border-right: none; }
+    .stat-item:last-child { border-bottom: none; }
+    #gasWidget { bottom: 12px; right: 12px; }
+  }
+  .contact-card {
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: var(--radius); padding: 24px;
+    display: flex; align-items: center; gap: 16px;
+    text-decoration: none; color: var(--text); transition: all 0.25s;
+    backdrop-filter: blur(12px);
+  }
+  .contact-card:hover {
+    border-color: var(--blue); box-shadow: 0 0 20px var(--blue-dim);
+    transform: translateY(-3px);
+  }
+  .contact-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: var(--blue-dim); display: flex; align-items: center;
+    justify-content: center; font-size: 18px; color: var(--blue); flex-shrink: 0;
+  }
+  .contact-info-label {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--muted); margin-bottom: 2px;
+  }
+  .contact-info-val { font-weight: 600; font-size: 14px; color: #fff; }
+
+  /* === DIVIDER === */
+  .divider { border: none; border-top: 1px solid var(--card-border); margin: 0; }
+
+  /* === FOOTER === */
+  footer { position: relative; z-index: 1; border-top: 1px solid var(--card-border); padding: 30px 0; }
+  .footer-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .footer-logo {
+    font-family: var(--font-head); font-size: 16px; font-weight: 900;
+    letter-spacing: 5px; color: var(--blue); text-shadow: 0 0 12px var(--blue-glow);
+  }
+  .footer-text { font-size: 12px; color: var(--muted); }
+
+  /* [NEW] Footer SafePal trust line */
+  .footer-trust {
+    width: 100%;
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; padding-top: 12px; margin-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    font-size: 11px; color: #333;
+    font-family: var(--font-mono);
+  }
+  .footer-trust i { color: var(--safepal); font-size: 12px; }
+
+  /* === NO RESULTS === */
+  .no-results {
+    text-align: center; padding: 40px; color: var(--muted);
+    font-size: 14px; display: none;
+  }
+  .no-results i { font-size: 30px; display: block; margin-bottom: 10px; color: #333; }
+
+  /* === SAFEPAL SECURED BADGE (NAV) === */
+  .safepal-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--safepal-dim); border: 1px solid rgba(27,138,245,0.3);
+    border-radius: 20px; padding: 4px 12px; font-family: var(--font-head);
+    font-size: 10px; font-weight: 700; letter-spacing: 0.5px;
+    color: var(--safepal); text-transform: uppercase; white-space: nowrap;
+    cursor: default; user-select: none; transition: box-shadow 0.3s;
+  }
+  .safepal-badge:hover { box-shadow: 0 0 12px rgba(27,138,245,0.3); }
+  .safepal-badge i { font-size: 10px; }
+
+  /* === WEB3 ACTION BUTTONS (EVM rows) === */
+  .icon-btn-mm:hover { background: var(--mm-dim) !important; border-color: var(--mm) !important; color: var(--mm) !important; }
+  .icon-btn-sp:hover { background: var(--safepal-dim) !important; border-color: var(--safepal) !important; color: var(--safepal) !important; }
+  .icon-btn-pay {
+    background: var(--pay-dim) !important;
+    border-color: rgba(168,85,247,0.35) !important;
+    color: var(--pay) !important;
+    animation: payPulse 2.5s ease-in-out infinite;
+  }
+  .icon-btn-pay:hover {
+    background: rgba(168,85,247,0.25) !important;
+    border-color: var(--pay) !important;
+    box-shadow: 0 0 14px rgba(168,85,247,0.4);
+  }
+  @keyframes payPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(168,85,247,0.3); }
+    50% { box-shadow: 0 0 0 4px rgba(168,85,247,0); }
+  }
+
+  /* EVM group deeplink pill row */
+  .evm-deeplink-bar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 20px 6px; flex-wrap: wrap;
+  }
+  .evm-deeplink-label {
+    font-size: 10px; font-family: var(--font-head); font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-right: 4px;
+  }
+  .deeplink-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 12px; border-radius: 20px; font-family: var(--font-head);
+    font-size: 10px; font-weight: 700; letter-spacing: 0.5px;
+    cursor: pointer; border: 1px solid; text-decoration: none;
+    transition: all 0.2s; user-select: none;
+  }
+  .deeplink-pill.mm { background: var(--mm-dim); border-color: rgba(246,133,27,0.35); color: var(--mm); }
+  .deeplink-pill.mm:hover { background: rgba(246,133,27,0.22); box-shadow: 0 0 10px rgba(246,133,27,0.3); }
+  .deeplink-pill.sp { background: var(--safepal-dim); border-color: rgba(27,138,245,0.35); color: var(--safepal); }
+  .deeplink-pill.sp:hover { background: rgba(27,138,245,0.22); box-shadow: 0 0 10px rgba(27,138,245,0.3); }
+  .deeplink-pill.tw { background: rgba(0,136,204,0.12); border-color: rgba(0,136,204,0.35); color: #0088cc; }
+  .deeplink-pill.tw:hover { background: rgba(0,136,204,0.22); box-shadow: 0 0 10px rgba(0,136,204,0.3); }
+
+  /* === WEB3 CONNECT & PAY MODAL === */
+  .web3-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(10px); z-index: 9100; display: flex;
+    align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .web3-overlay.open { opacity: 1; pointer-events: all; }
+  .web3-modal {
+    background: #131313; border: 1px solid rgba(168,85,247,0.3);
+    border-radius: 22px; padding: 30px 28px 26px; max-width: 420px; width: 92%;
+    box-shadow: 0 0 60px rgba(168,85,247,0.15), 0 24px 50px rgba(0,0,0,0.6);
+    transform: scale(0.88) translateY(10px);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative;
+  }
+  .web3-overlay.open .web3-modal { transform: scale(1) translateY(0); }
+  .web3-modal-close {
+    position: absolute; top: 14px; right: 16px;
+    background: none; border: none; color: var(--muted);
+    font-size: 16px; cursor: pointer; padding: 4px 8px;
+    border-radius: 6px; transition: color 0.2s;
+  }
+  .web3-modal-close:hover { color: var(--text); }
+  .web3-label {
+    font-family: var(--font-head); font-size: 10px; font-weight: 700;
+    letter-spacing: 2px; color: var(--pay); text-transform: uppercase; margin-bottom: 4px;
+  }
+  .web3-title {
+    font-family: var(--font-head); font-size: 20px; font-weight: 800;
+    color: #fff; margin-bottom: 18px;
+  }
+  .web3-to-addr {
+    background: var(--bg3); border: 1px solid var(--card-border);
+    border-radius: 10px; padding: 10px 14px; margin-bottom: 20px;
+  }
+  .web3-to-label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--muted); margin-bottom: 3px; font-weight: 600;
+  }
+  .web3-to-val { font-family: var(--font-mono); font-size: 10px; color: var(--text); word-break: break-all; }
+  .web3-amount-wrap { margin-bottom: 18px; }
+  .web3-amount-label {
+    font-size: 11px; font-weight: 600; color: var(--muted);
+    margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .web3-amount-input {
+    width: 100%; background: var(--bg3); border: 1px solid var(--card-border);
+    border-radius: 10px; padding: 12px 16px; font-family: var(--font-mono);
+    font-size: 18px; font-weight: 700; color: var(--text); outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s; text-align: right;
+  }
+  .web3-amount-input::placeholder { color: #333; }
+  .web3-amount-input:focus { border-color: var(--pay); box-shadow: 0 0 0 3px var(--pay-dim); }
+  .web3-wallet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+  .web3-wallet-btn {
+    display: flex; align-items: center; gap: 8px; padding: 12px 14px;
+    border-radius: 12px; border: 1px solid var(--card-border);
+    background: rgba(255,255,255,0.03); color: var(--text);
+    font-family: var(--font-head); font-size: 12px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s; text-decoration: none;
+    letter-spacing: 0.3px;
+  }
+  .web3-wallet-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+  .web3-wallet-btn.wc {
+    grid-column: 1 / -1; justify-content: center;
+    background: var(--pay-dim); border-color: rgba(168,85,247,0.35); color: var(--pay);
+  }
+  .web3-wallet-btn.wc:hover { background: rgba(168,85,247,0.2); }
+  .web3-wallet-btn.mm-btn { border-color: rgba(246,133,27,0.3); }
+  .web3-wallet-btn.mm-btn:hover { background: var(--mm-dim); border-color: var(--mm); color: var(--mm); }
+  .web3-wallet-btn.sp-btn { border-color: rgba(27,138,245,0.3); }
+  .web3-wallet-btn.sp-btn:hover { background: var(--safepal-dim); border-color: var(--safepal); color: var(--safepal); }
+  .web3-wallet-btn.tw-btn { border-color: rgba(0,136,204,0.3); }
+  .web3-wallet-btn.tw-btn:hover { background: rgba(0,136,204,0.12); border-color: #0088cc; color: #0088cc; }
+  .web3-wallet-btn.rb-btn { border-color: rgba(0,137,167,0.3); }
+  .web3-wallet-btn.rb-btn:hover { background: rgba(0,137,167,0.12); border-color: #0089A7; color: #0089A7; }
+  .web3-divider {
+    display: flex; align-items: center; gap: 10px;
+    margin: 14px 0; color: var(--muted); font-size: 11px;
+  }
+  .web3-divider::before, .web3-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--card-border);
+  }
+  .web3-status { display: none; text-align: center; padding: 20px 0 8px; }
+  .web3-status.active { display: block; }
+  .web3-status-icon { font-size: 32px; margin-bottom: 10px; }
+  .web3-status-title { font-family: var(--font-head); font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 6px; }
+  .web3-status-sub { font-size: 12px; color: var(--muted); word-break: break-all; }
+  .web3-status-sub a { color: var(--blue); text-decoration: none; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .spin { animation: spin 1s linear infinite; display: inline-block; }
+  .web3-send-btn {
+    width: 100%; padding: 14px;
+    background: linear-gradient(135deg, var(--pay), #7c3aed);
+    border: none; border-radius: 12px; color: #fff;
+    font-family: var(--font-head); font-size: 14px; font-weight: 800;
+    letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
+    transition: all 0.25s; box-shadow: 0 0 20px rgba(168,85,247,0.3);
+    display: none; margin-top: 14px;
+  }
+  .web3-send-btn:hover { box-shadow: 0 0 35px rgba(168,85,247,0.5); transform: translateY(-1px); }
+  .web3-send-btn.visible { display: block; }
+  .web3-connected-chip {
+    display: none; align-items: center; gap: 8px;
+    background: var(--green-dim); border: 1px solid rgba(0,200,100,0.3);
+    border-radius: 10px; padding: 8px 12px; font-size: 11px;
+    color: var(--green); font-weight: 600; margin-bottom: 12px;
+    font-family: var(--font-mono);
+  }
+  .web3-connected-chip.visible { display: flex; }
+  .web3-note {
+    font-size: 10px; color: #444; text-align: center; margin-top: 10px;
+    line-height: 1.5; font-family: var(--font-mono);
+  }
+  .web3-note span { color: var(--muted); }
+
+  /* Web3 info banner */
+  .web3-info-banner {
+    display: flex; align-items: flex-start; gap: 14px;
+    background: rgba(168,85,247,0.06); border: 1px solid rgba(168,85,247,0.2);
+    border-radius: 14px; padding: 18px 20px; margin-bottom: 24px;
+  }
+  .web3-info-icon {
+    width: 38px; height: 38px; border-radius: 10px;
+    background: var(--pay-dim); color: var(--pay);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .web3-info-text strong {
+    display: block; font-family: var(--font-head); font-size: 13px;
+    font-weight: 800; color: #fff; margin-bottom: 3px;
+  }
+  .web3-info-text span { font-size: 12px; color: var(--muted); line-height: 1.6; }
+  .web3-info-pills { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .web3-info-pill {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 9px; border-radius: 20px; font-size: 10px;
+    font-weight: 700; font-family: var(--font-head); letter-spacing: 0.3px;
+  }
+  .web3-info-pill.p { background: var(--pay-dim); color: var(--pay); border: 1px solid rgba(168,85,247,0.3); }
+  .web3-info-pill.m { background: var(--mm-dim); color: var(--mm); border: 1px solid rgba(246,133,27,0.3); }
+  .web3-info-pill.s { background: var(--safepal-dim); color: var(--safepal); border: 1px solid rgba(27,138,245,0.3); }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+  [NEW] PAGE LOADING SCREEN
+  Elegant scan animation with HIGER logo. Auto-dismisses on load.
+============================================================ -->
+<div id="pageLoader">
+  <div class="loader-logo">HIG<span>E</span>R</div>
+  <div class="loader-bar-wrap">
+    <div class="loader-bar"></div>
+  </div>
+  <div class="loader-text">Initializing Secure Hub...</div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">HIGER</a>
+    <div class="nav-right">
+      <div class="safepal-badge" title="Secured by SafePal Hardware Wallet">
+        <i class="fas fa-shield-halved"></i>
+        SafePal Secured
+      </div>
+      <div class="lang-toggle" onclick="toggleLang()">
+        <div class="lang-btn active" id="btnEN">EN</div>
+        <div class="lang-btn" id="btnDE">DE</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="visionary-badge reveal">
+      <i class="fas fa-star"></i>
+      <span data-en="Developed by a 15-year-old visionary" data-de="Entwickelt von einem 15-jährigen Visionär"></span>
+    </div>
+    <h1 class="hero-title reveal">HIG<span>E</span>R</h1>
+    <p class="hero-sub reveal" data-en="Supporting a young developer for learning, coding, and future projects." data-de="Unterstützung eines jungen Entwicklers für Lernen, Programmieren und zukünftige Projekte.">
+      Supporting a young developer for learning, coding, and future projects.
+    </p>
+    <div class="cta-group reveal">
+      <a href="#wallets" class="btn btn-primary">
+        <i class="fas fa-wallet"></i>
+        <span data-en="Donate Crypto" data-de="Krypto Spenden">Donate Crypto</span>
+      </a>
+      <a href="mailto:higeryazilim@gmail.com" class="btn btn-outline">
+        <i class="fas fa-envelope"></i>
+        <span data-en="Get in Touch" data-de="Kontakt aufnehmen">Get in Touch</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="container">
+  <div class="stats-bar reveal">
+    <div class="stat-item">
+      <span class="stat-num">90+</span>
+      <span class="stat-label" data-en="Wallet Addresses" data-de="Wallet-Adressen">Wallet Addresses</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">6</span>
+      <span class="stat-label" data-en="Network Groups" data-de="Netzwerk-Gruppen">Network Groups</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">15</span>
+      <span class="stat-label" data-en="Years Young" data-de="Jahre Jung">Years Young</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">100%</span>
+      <span class="stat-label" data-en="Transparent" data-de="Transparent">Transparent</span>
+    </div>
+  </div>
+</div>
+
+<!-- WALLET SECTION -->
+<section class="section" id="wallets">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label" data-en="Crypto Wallets" data-de="Krypto-Wallets">Crypto Wallets</div>
+      <h2 class="section-title" data-en="Choose Your Network" data-de="Wählen Sie Ihr Netzwerk">Choose Your Network</h2>
+      <p class="section-desc" data-en="Search for any coin or network, then copy the address or scan the QR code." data-de="Suche nach einer Münze oder einem Netzwerk, dann kopiere die Adresse oder scanne den QR-Code.">
+        Search for any coin or network, then copy the address or scan the QR code.
+      </p>
+
+      <!-- Web3 Feature Banner -->
+      <div class="web3-info-banner reveal">
+        <div class="web3-info-icon"><i class="fas fa-bolt"></i></div>
+        <div class="web3-info-text">
+          <strong data-en="One-Click Web3 Donations (EVM Networks)" data-de="Ein-Klick Web3-Spenden (EVM-Netzwerke)">One-Click Web3 Donations (EVM Networks)</strong>
+          <span data-en="EVM wallet rows include deeplink buttons — tap ⚡ to connect your browser wallet or open your mobile app directly." data-de="EVM-Wallet-Zeilen enthalten Deeplink-Buttons — tippe ⚡ um dein Browser-Wallet zu verbinden oder direkt die mobile App zu öffnen.">EVM wallet rows include deeplink buttons — tap ⚡ to connect your browser wallet or open your mobile app directly.</span>
+          <div class="web3-info-pills">
+            <span class="web3-info-pill p"><i class="fas fa-bolt"></i> Connect &amp; Pay</span>
+            <span class="web3-info-pill m"><i class="fas fa-fox"></i> MetaMask Deeplink</span>
+            <span class="web3-info-pill s"><i class="fas fa-shield-halved"></i> SafePal Deeplink</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================
+        [NEW] SAFEPAL POWERED TRUST BANNER
+        Professional trust signal — hardware wallet security claim
+      ============================================================ -->
+      <div class="safepal-trust-banner reveal">
+        <div class="safepal-trust-inner">
+          <div class="trust-shield-wrap">
+            <i class="fas fa-shield-halved"></i>
+          </div>
+          <div class="trust-text-wrap">
+            <div class="trust-headline" data-en="Your donations are secured by SafePal Hardware Wallet." data-de="Ihre Spenden sind durch die SafePal Hardware Wallet gesichert.">
+              Your donations are secured by SafePal Hardware Wallet.
+            </div>
+            <div class="trust-subline" data-en="All addresses are managed on a physical cold storage device — never exposed to online threats." data-de="Alle Adressen werden auf einem physischen Cold-Storage-Gerät verwaltet — nie online-Bedrohungen ausgesetzt.">
+              All addresses are managed on a physical cold storage device — never exposed to online threats.
+            </div>
+          </div>
+          <div class="trust-pills">
+            <span class="trust-pill"><i class="fas fa-lock"></i> Cold Storage</span>
+            <span class="trust-pill"><i class="fas fa-check-circle"></i> Verified</span>
+            <span class="trust-pill"><i class="fas fa-shield-halved"></i> SafePal</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="search-wrap reveal">
+      <i class="fas fa-search search-icon"></i>
+      <input type="text" id="searchInput" placeholder="Search network or coin..." oninput="filterWallets()" autocomplete="off">
+    </div>
+
+    <div id="walletsContainer">
+      <!-- Accordion groups injected by JS -->
+    </div>
+
+    <div class="no-results" id="noResults">
+      <i class="fas fa-ghost"></i>
+      <span data-en="No networks found." data-de="Keine Netzwerke gefunden.">No networks found.</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section class="section" id="contact">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label" data-en="Connect" data-de="Verbinden">Connect</div>
+      <h2 class="section-title" data-en="Get In Touch" data-de="Kontakt aufnehmen">Get In Touch</h2>
+      <p class="section-desc" data-en="Reach out through any platform — I'm always open to collaboration." data-de="Melde dich über jede Plattform — ich bin immer offen für Zusammenarbeit.">
+        Reach out through any platform — I'm always open to collaboration.
+      </p>
+    </div>
+    <div class="contact-grid reveal">
+      <a href="mailto:higeryazilim@gmail.com" class="contact-card">
+        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+        <div>
+          <div class="contact-info-label">Email</div>
+          <div class="contact-info-val">higeryazilim@gmail.com</div>
+        </div>
+      </a>
+      <a href="https://t.me/higer23" target="_blank" class="contact-card">
+        <div class="contact-icon" style="background:rgba(0,136,204,0.12);color:#0088cc;"><i class="fab fa-telegram"></i></div>
+        <div>
+          <div class="contact-info-label">Telegram</div>
+          <div class="contact-info-val">@higer23</div>
+        </div>
+      </a>
+      <a href="https://discord.gg/3r8f5MxD8n" target="_blank" class="contact-card">
+        <div class="contact-icon" style="background:rgba(88,101,242,0.12);color:#5865f2;"><i class="fab fa-discord"></i></div>
+        <div>
+          <div class="contact-info-label">Discord</div>
+          <div class="contact-info-val">discord.gg/3r8f5MxD8n</div>
+        </div>
+      </a>
+      <a href="https://instagram.com/higer.23" target="_blank" class="contact-card">
+        <div class="contact-icon" style="background:rgba(225,48,108,0.12);color:#e1306c;"><i class="fab fa-instagram"></i></div>
+        <div>
+          <div class="contact-info-label">Instagram</div>
+          <div class="contact-info-val">@higer.23</div>
+        </div>
+      </a>
+      <a href="https://github.com/Higer23" target="_blank" class="contact-card">
+        <div class="contact-icon" style="background:rgba(255,255,255,0.06);color:#e8e8e8;"><i class="fab fa-github"></i></div>
+        <div>
+          <div class="contact-info-label">GitHub</div>
+          <div class="contact-info-val">Higer23</div>
+        </div>
+      </a>
+      <a href="mailto:higeryazilim@gmail.com" class="contact-card" style="border-color:rgba(0,212,255,0.25);background:rgba(0,212,255,0.04);">
+        <div class="contact-icon"><i class="fas fa-heart"></i></div>
+        <div>
+          <div class="contact-info-label" data-en="Collaboration" data-de="Kollaboration">Collaboration</div>
+          <div class="contact-info-val" data-en="Let's build something" data-de="Lass uns etwas bauen">Let's build something</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">HIGER</div>
+      <div class="footer-text" data-en="Built with passion by a 15-year-old developer. © 2025 HIGER." data-de="Mit Leidenschaft gebaut von einem 15-jährigen Entwickler. © 2025 HIGER.">
+        Built with passion by a 15-year-old developer. © 2025 HIGER.
+      </div>
+      <!-- [NEW] Footer trust line -->
+      <div class="footer-trust">
+        <i class="fas fa-shield-halved"></i>
+        <span data-en="Powered by SafePal Hardware Wallet · Your donations are always secure." data-de="Betrieben von SafePal Hardware Wallet · Ihre Spenden sind immer sicher.">
+          Powered by SafePal Hardware Wallet · Your donations are always secure.
+        </span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- WEB3 CONNECT & PAY MODAL -->
+<div class="web3-overlay" id="web3Overlay" onclick="closeWeb3ModalOutside(event)">
+  <div class="web3-modal" id="web3ModalBox">
+    <button class="web3-modal-close" onclick="closeWeb3Modal()"><i class="fas fa-times"></i></button>
+
+    <div class="web3-label"><i class="fas fa-bolt"></i> &nbsp;Web3 Pay</div>
+    <div class="web3-title" id="web3ModalTitle">Send to Ethereum</div>
+
+    <div class="web3-to-addr">
+      <div class="web3-to-label">Recipient Address</div>
+      <div class="web3-to-val" id="web3ModalAddr">—</div>
+    </div>
+
+    <!-- [NEW] Network Mismatch Warning Banner -->
+    <div id="networkMismatchBanner">
+      <i class="fas fa-triangle-exclamation nmb-icon"></i>
+      <div class="nmb-text">
+        <div class="nmb-title">Wrong Network Detected!</div>
+        <div class="nmb-sub" id="nmbSubText">You are on the wrong network. Please switch to send funds correctly.</div>
+        <button class="nmb-switch-btn" onclick="switchToRequiredNetwork()">
+          <i class="fas fa-arrows-rotate"></i> Switch Network
+        </button>
+      </div>
+    </div>
+
+    <!-- Main UI (step 1: pick wallet) -->
+    <div id="web3StepPick">
+      <div class="web3-amount-wrap">
+        <div class="web3-amount-label">Amount (ETH)</div>
+        <input class="web3-amount-input" id="web3AmountInput" type="number" placeholder="0.001" step="0.001" min="0.001" value="0.001">
+      </div>
+
+      <div class="web3-connected-chip" id="web3ConnectedChip">
+        <i class="fas fa-check-circle"></i>
+        <span id="web3ConnectedAddr">0x0000…0000</span>
+        <span style="margin-left:auto;font-size:10px;opacity:.6;">connected</span>
+      </div>
+
+      <div id="web3WalletGrid">
+        <!-- Desktop browser wallet -->
+        <button class="web3-wallet-btn wc" onclick="web3ConnectBrowser()">
+          <i class="fas fa-bolt"></i> &nbsp;Connect Browser Wallet (MetaMask / Rabby / etc.)
+        </button>
+
+        <div class="web3-divider">or open mobile app directly</div>
+
+        <div class="web3-wallet-grid">
+          <a class="web3-wallet-btn mm-btn" id="mmDeeplink" href="#" onclick="handleDeeplinkClick(event,'mm')">
+            <i class="fas fa-circle" style="color:var(--mm);font-size:8px;"></i> MetaMask
+          </a>
+          <a class="web3-wallet-btn sp-btn" id="spDeeplink" href="#" onclick="handleDeeplinkClick(event,'sp')">
+            <i class="fas fa-shield-halved" style="color:var(--safepal);font-size:10px;"></i> SafePal
+          </a>
+          <a class="web3-wallet-btn tw-btn" id="twDeeplink" href="#" onclick="handleDeeplinkClick(event,'tw')">
+            <i class="fas fa-circle" style="color:#0088cc;font-size:8px;"></i> Trust Wallet
+          </a>
+          <a class="web3-wallet-btn rb-btn" id="rbDeeplink" href="#" onclick="handleDeeplinkClick(event,'rb')">
+            <i class="fas fa-circle" style="color:#0089A7;font-size:8px;"></i> Rainbow
+          </a>
+        </div>
+      </div>
+
+      <button class="web3-send-btn" id="web3SendBtn" onclick="executeBrowserPayment()">
+        <i class="fas fa-paper-plane"></i> &nbsp;Send Transaction
+      </button>
+
+      <p class="web3-note">EVM ağları için · Yalnızca ETH/native token gönderimi · <span>ERC-20 token için adresi kopyalayın</span></p>
+    </div>
+
+    <!-- Status: pending -->
+    <div class="web3-status" id="web3StatusPending">
+      <div class="web3-status-icon"><i class="fas fa-circle-notch spin" style="color:var(--pay);"></i></div>
+      <div class="web3-status-title">Transaction Pending…</div>
+      <div class="web3-status-sub" id="web3TxHash">Waiting for confirmation</div>
+    </div>
+
+    <!-- Status: success -->
+    <div class="web3-status" id="web3StatusSuccess">
+      <div class="web3-status-icon">✅</div>
+      <div class="web3-status-title">Sent Successfully!</div>
+      <div class="web3-status-sub" id="web3TxLink">View on explorer</div>
+      <button class="btn btn-outline" style="margin-top:14px;font-size:12px;padding:8px 20px;" onclick="resetWeb3Modal()">Send Another</button>
+    </div>
+
+    <!-- Status: error -->
+    <div class="web3-status" id="web3StatusError">
+      <div class="web3-status-icon">❌</div>
+      <div class="web3-status-title">Transaction Failed</div>
+      <div class="web3-status-sub" id="web3ErrMsg">Unknown error</div>
+      <button class="btn btn-outline" style="margin-top:14px;font-size:12px;padding:8px 20px;" onclick="resetWeb3Modal()">Try Again</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="copy-toast" id="copyToast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastMsg">Copied!</span>
+</div>
+
+<!-- QR MODAL -->
+<div class="modal-overlay" id="qrModal" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-network" id="modalNetwork"></div>
+    <div class="modal-title" id="modalTitle"></div>
+    <div class="qr-wrap">
+      <img id="qrImg" src="" alt="QR Code">
+    </div>
+    <div class="modal-addr" id="modalAddr"></div>
+    <button class="modal-close" onclick="document.getElementById('qrModal').classList.remove('open')">
+      <i class="fas fa-times"></i>
+      <span>Close</span>
+    </button>
+  </div>
+</div>
+
+<!-- ============================================================
+  [NEW] GAS TRACKER WIDGET (floating bottom-right)
+  Shows live ETH / BNB / MATIC gas prices from public APIs.
+  Refreshes every 60 seconds. Collapsible.
+============================================================ -->
+<div id="gasWidget">
+  <div class="gas-header" onclick="toggleGasWidget()">
+    <div class="gas-header-left">
+      <div class="gas-live-dot" id="gasLiveDot"></div>
+      <span class="gas-title-text">Live Gas</span>
+    </div>
+    <button class="gas-collapse-btn" id="gasCollapseBtn" title="Toggle">
+      <i class="fas fa-chevron-down" id="gasChevronIcon"></i>
+    </button>
+  </div>
+  <div class="gas-body" id="gasBody">
+    <!-- ETH -->
+    <div class="gas-chain-row">
+      <div class="gas-chain-icon eth">Ξ</div>
+      <div class="gas-chain-meta">
+        <div class="gas-chain-name">Ethereum</div>
+        <div class="gas-values" id="ethGasValues">
+          <span class="gas-val">—</span>
+          <span class="gas-gwei-label">gwei</span>
+        </div>
+      </div>
+    </div>
+    <!-- BSC -->
+    <div class="gas-chain-row">
+      <div class="gas-chain-icon bnb">B</div>
+      <div class="gas-chain-meta">
+        <div class="gas-chain-name">BNB Chain</div>
+        <div class="gas-values" id="bnbGasValues">
+          <span class="gas-val">—</span>
+          <span class="gas-gwei-label">gwei</span>
+        </div>
+      </div>
+    </div>
+    <!-- Polygon -->
+    <div class="gas-chain-row">
+      <div class="gas-chain-icon matic">◈</div>
+      <div class="gas-chain-meta">
+        <div class="gas-chain-name">Polygon</div>
+        <div class="gas-values" id="maticGasValues">
+          <span class="gas-val">—</span>
+          <span class="gas-gwei-label">gwei</span>
+        </div>
+      </div>
+    </div>
+    <!-- Footer -->
+    <div class="gas-footer">
+      <span class="gas-refresh-text" id="gasRefreshCountdown">Refreshing...</span>
+      <button class="gas-refresh-btn" id="gasRefreshBtn" onclick="manualRefreshGas()" title="Refresh now">
+        <i class="fas fa-rotate-right" id="gasRefreshIcon"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================
+// [NEW] PAGE LOADER
+// Dismisses once all resources are ready (window.onload)
+// ============================
+(function initPageLoader() {
+  window.addEventListener('load', () => {
+    // Small delay for dramatic effect
+    setTimeout(() => {
+      const loader = document.getElementById('pageLoader');
+      if (loader) loader.classList.add('hidden');
+    }, 900);
+  });
+  // Hard fallback: dismiss after 3s regardless
+  setTimeout(() => {
+    const loader = document.getElementById('pageLoader');
+    if (loader) loader.classList.add('hidden');
+  }, 3000);
+})();
+
+// ============================
+// WALLET DATA
+// ============================
+const WALLETS = {
+  evm: {
+    label: { en: "EVM Networks", de: "EVM-Netzwerke" },
+    icon: "fa-brands fa-ethereum",
+    iconClass: "blue",
+    wallets: [
+      { name: "Ethereum",       addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 1 },
+      { name: "Arbitrum One",   addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 42161 },
+      { name: "Optimism",       addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 10 },
+      { name: "Base",           addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 8453 },
+      { name: "Polygon",        addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 137 },
+      { name: "Polygon zkEVM",  addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 1101 },
+      { name: "zkSync Era",     addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 324 },
+      { name: "Linea",          addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 59144 },
+      { name: "Scroll",         addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 534352 },
+      { name: "Taiko",          addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 167000 },
+      { name: "Blast",          addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 81457 },
+      { name: "BNB Chain",      addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 56 },
+      { name: "opBNB",          addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 204 },
+      { name: "AVAX C-Chain",   addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 43114 },
+      { name: "Fantom",         addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 250 },
+      { name: "Cronos",         addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 25 },
+      { name: "Aurora",         addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 1313161554 },
+      { name: "Moonbeam",       addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 1284 },
+      { name: "Moonriver",      addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 1285 },
+      { name: "Gnosis",         addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 100 },
+      { name: "Celo",           addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 42220 },
+      { name: "Flare",          addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 14 },
+      { name: "Songbird",       addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 19 },
+      { name: "Hedera-EVM",     addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 295 },
+      { name: "Hyper-EVM",      addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 999 },
+      { name: "Mantle",         addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 5000 },
+      { name: "Manta Pacific",  addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 169 },
+      { name: "Metis",          addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 1088 },
+      { name: "Boba",           addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 288 },
+      { name: "Kaia",           addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 8217 },
+      { name: "KCC",            addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 321 },
+      { name: "Kava-EVM",       addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 2222 },
+      { name: "Oasis Sapphire", addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 23294 },
+      { name: "Sei-EVM",        addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 1329 },
+      { name: "Core",           addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 1116 },
+      { name: "Rootstock",      addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 30 },
+      { name: "Fuse",           addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 122 },
+      { name: "PulseChain",     addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 369 },
+      { name: "Gravity",        addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 1625 },
+      { name: "Berachain",      addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 80094 },
+      { name: "Sonic",          addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 146 },
+      { name: "World Chain",    addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 480 },
+      { name: "Lumia",          addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 994873017 },
+      { name: "Plasma",         addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 827431 },
+      { name: "Bitlayer",       addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 200901 },
+      { name: "Merlin",         addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 4200 },
+      { name: "BounceBit",      addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 6001 },
+      { name: "X Layer",        addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 196 },
+      { name: "ZKFair",         addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 42766 },
+      { name: "AirDAO",         addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 16718 },
+      { name: "Caduceus",       addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 256256 },
+      { name: "LemonChain",     addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4" },
+      { name: "MST Blockchain", addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4" },
+      { name: "ENI Chain",      addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4" },
+      { name: "Godwoken",       addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 71402 },
+      { name: "Godwoken V1",    addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 71401 },
+      { name: "EthereumPoW",    addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 10001 },
+      { name: "Sidra",          addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4" },
+      { name: "Syscoin-EVM",    addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 57 },
+      { name: "Telos-EVM",      addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 40 },
+      { name: "ValueChain",     addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4" },
+      { name: "Viction",        addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 88 },
+      { name: "Monad",          addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4" },
+      { name: "XinFin",         addr: "xdc3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4", chainId: 50 },
+      { name: "Ethereum Classic",addr:"0x27E291F5c3965f914dd99554182E43f87Fb5591b", chainId: 61 },
+      { name: "VeChain",        addr: "0x82F7154A810F0a7e0A24007c58eafc9BA8c9747d" },
+      { name: "Theta",          addr: "0x83e5987BA4cE819563D5936f7C42Af2F81EcF659", chainId: 361 },
+    ]
+  },
+  btc: {
+    label: { en: "Bitcoin & UTXO", de: "Bitcoin & UTXO" },
+    icon: "fa-brands fa-bitcoin",
+    iconClass: "gold",
+    wallets: [
+      { name: "Bitcoin (Native SegWit)", addr: "bc1qrhntxw9qxxpzfek8cmdjx5m6kfaa0a72gww5r3" },
+      { name: "Bitcoin Cash",            addr: "qqwa4mmzf4ylf84uysvuutsgep4aexssks69694eyl" },
+      { name: "Litecoin (Native SegWit)",addr: "ltc1qzdr3zvu5ls04xeg69qlxhvdz8n2vjmt6536" },
+      { name: "Dogecoin",                addr: "DGDivEtCC67Hk5DG5BSXUYLJPjoE3U1iB3" },
+      { name: "Dash",                    addr: "XkdYayZkCQE23v5HqP1ZtBZSy5emzUWFhx" },
+      { name: "DigiByte",                addr: "dgb1qcupzc7kym0agpd6lepa3w7gns3c6rvaq4w6rgl" },
+      { name: "QTUM",                    addr: "Qjah94xFmFJBzcfyDfWeTR5utLmakk9fu9" },
+      { name: "Zcash",                   addr: "t1Y7FwKpNENCce4zqKeSuyQeH7XXzrfP5hD" },
+    ]
+  },
+  cosmos: {
+    label: { en: "Cosmos Ecosystem", de: "Cosmos-Ökosystem" },
+    icon: "fa-solid fa-atom",
+    iconClass: "purple",
+    wallets: [
+      { name: "Cosmos",        addr: "cosmos1jhjxsh35eueeud5qnvwuf5atf26t4u8tkmzlj" },
+      { name: "Osmosis",       addr: "osmo1jhjxsh35eueeud5qnvwuf5atf26t4u8t77gjfq" },
+      { name: "Injective",     addr: "inj18672ga7v45j7x9vwmtlqlqu7tf05uw7yapxqef" },
+      { name: "Terra",         addr: "terra1kv5lwz7p84dachtea2ldxhvrp4gen0x7myhqpg" },
+      { name: "Terra Classic", addr: "terra1kv5lwz7p84dachtea2ldxhvrp4gen0x7myhqpg" },
+      { name: "BNB Beacon Chain", addr: "bnb13tew77x29l7d2typhygm3kkzguwjvdc65vegpk" },
+    ]
+  },
+  polkadot: {
+    label: { en: "Polkadot / Substrate", de: "Polkadot / Substrate" },
+    icon: "fa-solid fa-circle-nodes",
+    iconClass: "orange",
+    wallets: [
+      { name: "Polkadot",          addr: "12dkoSuQFb1JkHspaaPXBBuYH5zj6xkthfoGiQZdwcnyeHiq" },
+      { name: "Kusama",            addr: "GiM67BQ5mmyCyhv5i1aKHm6tJE5TatAd53snF58YoKdUB4X" },
+      { name: "AssetHub Polkadot", addr: "12dkoSuQFb1JkHspaaPXBBuYH5zj6xkthfoGiQZdwcnyeHiq" },
+      { name: "AssetHub Kusama",   addr: "GiM67BQ5mmyCyhv5i1aKHm6tJE5TatAd53snF58YoKdUB4X" },
+    ]
+  },
+  l1: {
+    label: { en: "Other L1 Chains", de: "Andere L1-Chains" },
+    icon: "fa-solid fa-layer-group",
+    iconClass: "green",
+    wallets: [
+      { name: "Solana",       addr: "Gi6LiGTrnhZ9R58TLGDbJku8qbHSiWBNiQ9o7BbPDN7j" },
+      { name: "Aptos",        addr: "0x610592bab5d23a78720e516883c88dbeda67762574cfa98c4f70c5767341f6e" },
+      { name: "SUI",          addr: "0xe92b6e508bf2d2a527ef251350c3b9b18b572442b5e8c55cad04ef92a7cca1b" },
+      { name: "TON",          addr: "UQCNRRxTdUmHHXQ9EgIJ8flFkym5_yer9HwYelhBWIhaixqg" },
+      { name: "Stellar",      addr: "GBUUQ4XR65ZOMUFTYMMFTQHJW736DH7IDPV2TJ7YMAX3THWOZZL6OB" },
+      { name: "Ripple",       addr: "rJ5Z7rQkU3hAjWgpz4bhMT3ye4H3q4vcaz" },
+      { name: "Tron",         addr: "TGwWv8p5deEtk7uRXBKqtQ8LJsTCnF3yJ4" },
+      { name: "Cardano",      addr: "addr1qycewtj7d4rrnvkfa997m445pg46palfat3s0ttym9i34gnasmmzlmgv2kmvsmtt22huyd3fufp5vrh8gty45yqx7a493" },
+      { name: "NEAR",         addr: "92f507bd358c3ad866edb1ec89bf27371f9062e5468655346807961d7b22990" },
+      { name: "Filecoin",     addr: "f1vvqixp3kmbdd7jefbn73aohttj6lzmnbomya63y" },
+      { name: "Harmony",      addr: "one1pefanjkk4cyl274ramc6n4urgtlzeynmuyg9q" },
+      { name: "Kaspa",        addr: "kaspa:qzjz2j90rett69h2xm9gpy94l8x3mmlce52t0lvzs5vkq4y4elxuyem5qmru" },
+      { name: "Alephium",     addr: "123C2w6jE9z1wJ7Pqi7HxbrAgfc2LnQQCtJ1HbDF32RSk" },
+      { name: "Chromia",      addr: "9789ba2855b2432d0367559ae8e50a5db1c94ee1a9ccdff0e1c88d6fce73408ee" },
+      { name: "MultiversX",   addr: "erd1t8rj25tf5wv5gvd9eup7drjd4s4y649zt" },
+      { name: "Venom",        addr: "0:23082e40c9ba05b12a9e7ab02ab8e66f0b5928a5d6b09d8c360b681e08d3b56a" },
+      { name: "Nervos",       addr: "ckb1qyqtlmeetg2vukjvrn69mnz2vw5zcqpxdnss6m5zz" },
+      { name: "NEO-Legacy",   addr: "AK7QDPbM15LG6jdydcZjnsBPNgWZZa47W" },
+    ]
+  },
+  testnet: {
+    label: { en: "⚠️ Testnets — DO NOT SEND REAL ASSETS", de: "⚠️ Testnets — KEINE ECHTEN ASSETS SENDEN" },
+    icon: "fa-solid fa-triangle-exclamation",
+    iconClass: "danger",
+    isTestnet: true,
+    wallets: [
+      { name: "Aptos-Dev",           addr: "0x610592bab5d23a78720e516883c88dbeda67762574cfa98c4f70c5767341f6e" },
+      { name: "ArcTest",             addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4" },
+      { name: "Bitcoin-Testnet",     addr: "tb1pyfn4j43h83vjtgrpqy2tscuqq54jyu9rgvvl3ztfdz9mceexsrwqlza4w0" },
+      { name: "Monad Testnet",       addr: "0x3eBCa477Ccad25e3158Edafe0F839e5a5f4E3Bc4" },
+      { name: "SUI-Test",            addr: "0xe92b6e508bf2d2a527ef251350c3b9b18b572442b5e8c55cad04ef92a7cca1b" },
+    ]
+  }
+};
+
+// ============================
+// LANGUAGE
+// ============================
+let currentLang = 'en';
+
+function toggleLang() {
+  currentLang = currentLang === 'en' ? 'de' : 'en';
+  document.getElementById('btnEN').classList.toggle('active', currentLang === 'en');
+  document.getElementById('btnDE').classList.toggle('active', currentLang === 'de');
+
+  document.querySelectorAll('[data-en]').forEach(el => {
+    el.textContent = el.dataset[currentLang];
+  });
+
+  document.getElementById('searchInput').placeholder = currentLang === 'en'
+    ? 'Search network or coin...'
+    : 'Netzwerk oder Coin suchen...';
+
+  document.querySelectorAll('.group-name[data-group]').forEach(el => {
+    const key = el.dataset.group;
+    if (WALLETS[key]) el.textContent = WALLETS[key].label[currentLang];
+  });
+}
+
+// ============================
+// RENDER WALLETS
+// ============================
+function buildWallets() {
+  const container = document.getElementById('walletsContainer');
+  container.innerHTML = '';
+
+  Object.entries(WALLETS).forEach(([key, group]) => {
+    const groupEl = document.createElement('div');
+    groupEl.className = 'wallet-group reveal';
+    groupEl.dataset.group = key;
+
+    const isEVM = key === 'evm';
+
+    // Build rows HTML — each EVM row gets chain-id badge + deeplink buttons
+    const rowsHtml = group.wallets.map((w) => {
+      const chainBadge = (isEVM && w.chainId)
+        ? `<span class="chain-id-badge" title="Chain ID">id:${w.chainId}</span>`
+        : '';
+      const evmBtns = isEVM ? `
+        <button class="icon-btn icon-btn-mm" title="Open in MetaMask App" onclick="openDeeplink('mm','${escapeQuote(w.addr)}')">
+          <i class="fas fa-mobile-screen-button"></i>
+        </button>
+        <button class="icon-btn icon-btn-sp" title="Open in SafePal App" onclick="openDeeplink('sp','${escapeQuote(w.addr)}')">
+          <i class="fas fa-shield-halved"></i>
+        </button>
+        <button class="icon-btn icon-btn-pay" title="Connect &amp; Pay (Web3)" onclick="openWeb3Modal('${escapeQuote(w.addr)}', '${escapeQuote(w.name)}', ${w.chainId || 'null'})">
+          <i class="fas fa-bolt"></i>
+        </button>
+      ` : '';
+
+      return `
+        <div class="wallet-row" data-name="${w.name.toLowerCase()}" data-group="${key}">
+          <div class="wallet-name">${w.name}</div>
+          <div class="wallet-addr-wrap">
+            <span class="wallet-addr" title="${w.addr}">${w.addr}</span>
+          </div>
+          ${chainBadge}
+          <div class="wallet-actions">
+            <button class="icon-btn" title="Copy" onclick="copyAddr(this, '${escapeQuote(w.addr)}')">
+              <i class="fas fa-copy"></i>
+            </button>
+            <button class="icon-btn" title="QR Code" onclick="showQR('${escapeQuote(w.name)}', '${escapeQuote(group.label.en)}', '${escapeQuote(w.addr)}')">
+              <i class="fas fa-qrcode"></i>
+            </button>
+            ${evmBtns}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    const warningHtml = group.isTestnet ? `
+      <div class="testnet-warning">
+        <i class="fas fa-triangle-exclamation warning-icon"></i>
+        <div class="warning-text">
+          <strong>🚨 DO NOT SEND REAL ASSETS TO TESTNET ADDRESSES!</strong>
+          <span>Diese Adressen sind NUR für Test-Transaktionen. Echte Gelder gehen unwiederbringlich verloren!</span>
+        </div>
+      </div>
+    ` : '';
+
+    const evmBarHtml = isEVM ? `
+      <div class="evm-deeplink-bar">
+        <span class="evm-deeplink-label"><i class="fas fa-mobile-screen-button"></i> Quick Open:</span>
+        <a class="deeplink-pill mm" href="#" onclick="openDeeplink('mm','${escapeQuote(group.wallets[0]?.addr||'')}');return false;">
+          <i class="fas fa-circle" style="font-size:7px;"></i> MetaMask
+        </a>
+        <a class="deeplink-pill sp" href="#" onclick="openDeeplink('sp','${escapeQuote(group.wallets[0]?.addr||'')}');return false;">
+          <i class="fas fa-shield-halved"></i> SafePal
+        </a>
+        <a class="deeplink-pill tw" href="#" onclick="openDeeplink('tw','${escapeQuote(group.wallets[0]?.addr||'')}');return false;">
+          <i class="fas fa-circle" style="font-size:7px;"></i> Trust
+        </a>
+      </div>
+    ` : '';
+
+    groupEl.innerHTML = `
+      <div class="group-header" onclick="toggleGroup(this)">
+        <div class="group-icon ${group.iconClass}"><i class="${group.icon}"></i></div>
+        <div class="group-meta">
+          <div class="group-name" data-group="${key}">${group.label[currentLang]}</div>
+          <div class="group-count">${group.wallets.length} ${currentLang === 'en' ? 'addresses' : 'Adressen'}</div>
+        </div>
+        <i class="fas fa-chevron-down group-chevron"></i>
+      </div>
+      <div class="group-body">
+        <div class="group-body-inner">
+          ${warningHtml}
+          ${evmBarHtml}
+          ${rowsHtml}
+        </div>
+      </div>
+    `;
+
+    container.appendChild(groupEl);
+  });
+
+  setTimeout(observeReveal, 100);
+}
+
+function escapeQuote(s) {
+  return s.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+}
+
+// ============================
+// ACCORDION
+// ============================
+function toggleGroup(header) {
+  const group = header.parentElement;
+  group.classList.toggle('open');
+}
+
+// ============================
+// COPY  +  [NEW] CONFETTI
+// ============================
+function copyAddr(btn, addr) {
+  navigator.clipboard.writeText(addr).then(() => {
+    btn.classList.add('copied');
+    btn.innerHTML = '<i class="fas fa-check"></i>';
+
+    // [NEW] Tiny confetti burst from the button's position
+    triggerCopyConfetti(btn);
+
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = '<i class="fas fa-copy"></i>';
+    }, 1800);
+    showToast(currentLang === 'en' ? '✓ Copied!' : '✓ Kopiert!');
+  });
+}
+
+/**
+ * [NEW] triggerCopyConfetti
+ * Fires a small, tasteful confetti burst from the copy button's location.
+ * Uses canvas-confetti library — lightweight, no janky DOM clutter.
+ */
+function triggerCopyConfetti(btn) {
+  try {
+    if (typeof confetti === 'undefined') return;
+    const rect = btn.getBoundingClientRect();
+    const x = (rect.left + rect.width / 2) / window.innerWidth;
+    const y = (rect.top + rect.height / 2) / window.innerHeight;
+
+    confetti({
+      particleCount: 28,
+      spread: 55,
+      origin: { x, y },
+      colors: ['#00D4FF', '#00C864', '#FFD700', '#A855F7'],
+      scalar: 0.75,
+      gravity: 1.2,
+      ticks: 180,
+      startVelocity: 22,
+      zIndex: 99999,
+    });
+  } catch (e) {
+    // confetti not loaded — fail silently
+  }
+}
+
+function showToast(msg) {
+  const t = document.getElementById('copyToast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// ============================
+// QR CODE
+// ============================
+function showQR(network, group, addr) {
+  document.getElementById('modalNetwork').textContent = group;
+  document.getElementById('modalTitle').textContent = network;
+  document.getElementById('modalAddr').textContent = addr;
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(addr)}&margin=0&bgcolor=ffffff`;
+  document.getElementById('qrImg').src = qrUrl;
+  document.getElementById('qrModal').classList.add('open');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('qrModal')) {
+    document.getElementById('qrModal').classList.remove('open');
+  }
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.getElementById('qrModal').classList.remove('open');
+    document.getElementById('web3Overlay')?.classList.remove('open');
+  }
+});
+
+// ============================
+// SEARCH / FILTER
+// ============================
+function filterWallets() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  let anyVisible = false;
+
+  const groups = document.querySelectorAll('.wallet-group');
+  groups.forEach(groupEl => {
+    const key = groupEl.dataset.group;
+    const rows = groupEl.querySelectorAll('.wallet-row');
+    let groupVisible = false;
+
+    rows.forEach(row => {
+      const name = row.dataset.name || '';
+      const addr = row.querySelector('.wallet-addr').textContent.toLowerCase();
+      const match = !q || name.includes(q) || addr.includes(q);
+      row.classList.toggle('hidden', !match);
+      if (match) groupVisible = true;
+    });
+
+    const groupName = (WALLETS[key]?.label.en + ' ' + WALLETS[key]?.label.de).toLowerCase();
+    if (q && groupName.includes(q)) {
+      rows.forEach(r => r.classList.remove('hidden'));
+      groupVisible = true;
+    }
+
+    groupEl.style.display = groupVisible ? '' : 'none';
+    if (groupVisible) anyVisible = true;
+
+    if (q && groupVisible) groupEl.classList.add('open');
+    else if (!q) groupEl.classList.remove('open');
+  });
+
+  document.getElementById('noResults').style.display = (!q || anyVisible) ? 'none' : 'block';
+}
+
+// ============================
+// SCROLL REVEAL
+// ============================
+function observeReveal() {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry, idx) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), idx * 60);
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el => io.observe(el));
+}
+
+// ============================
+// WEB3 DEEPLINK & CONNECT
+// ============================
+let web3TargetAddr = '';
+let web3TargetName = '';
+let web3TargetChainId = null;  // [NEW] target chain id for network verification
+let web3Provider = null;
+let web3Account = null;
+
+const EVM_EXPLORERS = {
+  1: 'https://etherscan.io/tx/',
+  56: 'https://bscscan.com/tx/',
+  137: 'https://polygonscan.com/tx/',
+  42161: 'https://arbiscan.io/tx/',
+  10: 'https://optimistic.etherscan.io/tx/',
+  8453: 'https://basescan.org/tx/',
+  43114: 'https://snowtrace.io/tx/',
+};
+
+// [NEW] Human-readable chain names for mismatch warnings
+const CHAIN_NAMES = {
+  1: 'Ethereum Mainnet',
+  56: 'BNB Smart Chain',
+  137: 'Polygon Mainnet',
+  42161: 'Arbitrum One',
+  10: 'Optimism',
+  8453: 'Base',
+  43114: 'Avalanche C-Chain',
+  250: 'Fantom Opera',
+  100: 'Gnosis Chain',
+  324: 'zkSync Era',
+  59144: 'Linea',
+  8217: 'Kaia',
+  25: 'Cronos',
+};
+
+function openDeeplink(type, addr) {
+  let url = '';
+  if (type === 'mm') {
+    url = `https://metamask.app.link/send/${addr}@1`;
+  } else if (type === 'sp') {
+    url = `safepalwallet://send?address=${addr}`;
+  } else if (type === 'tw') {
+    url = `trust://send?address=${addr}&asset=c60_t%2B`;
+  } else if (type === 'rb') {
+    url = `rainbow://send?address=${addr}`;
+  }
+  if (url) {
+    const a = document.createElement('a');
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+}
+
+function handleDeeplinkClick(e, type) {
+  e.preventDefault();
+  openDeeplink(type, web3TargetAddr);
+}
+
+// [UPDATED] openWeb3Modal now accepts chainId parameter for network verification
+function openWeb3Modal(addr, name, chainId) {
+  web3TargetAddr = addr;
+  web3TargetName = name;
+  web3TargetChainId = chainId || null;
+
+  document.getElementById('web3ModalTitle').textContent = `Send to ${name}`;
+  document.getElementById('web3ModalAddr').textContent = addr;
+
+  // Update deeplinks
+  const mmDl = document.getElementById('mmDeeplink');
+  const spDl = document.getElementById('spDeeplink');
+  const twDl = document.getElementById('twDeeplink');
+  const rbDl = document.getElementById('rbDeeplink');
+  if (mmDl) mmDl.href = `https://metamask.app.link/send/${addr}@1`;
+  if (spDl) spDl.href = `safepalwallet://send?address=${addr}`;
+  if (twDl) twDl.href = `trust://send?address=${addr}&asset=c60_t%2B`;
+  if (rbDl) rbDl.href = `rainbow://send?address=${addr}`;
+
+  // Hide mismatch banner initially
+  document.getElementById('networkMismatchBanner').classList.remove('visible');
+
+  resetWeb3Modal();
+
+  if (web3Account) {
+    const chip = document.getElementById('web3ConnectedChip');
+    const btn = document.getElementById('web3SendBtn');
+    chip.classList.add('visible');
+    document.getElementById('web3ConnectedAddr').textContent = shortAddr(web3Account);
+    btn.classList.add('visible');
+    // [NEW] Check network on modal open if already connected
+    if (web3TargetChainId) checkNetworkMismatch();
+  }
+
+  document.getElementById('web3Overlay').classList.add('open');
+}
+
+function closeWeb3Modal() {
+  document.getElementById('web3Overlay').classList.remove('open');
+}
+
+function closeWeb3ModalOutside(e) {
+  if (e.target === document.getElementById('web3Overlay')) closeWeb3Modal();
+}
+
+function resetWeb3Modal() {
+  document.getElementById('web3StepPick').style.display = 'block';
+  document.getElementById('web3StatusPending').classList.remove('active');
+  document.getElementById('web3StatusSuccess').classList.remove('active');
+  document.getElementById('web3StatusError').classList.remove('active');
+  document.getElementById('networkMismatchBanner').classList.remove('visible');
+
+  const chip = document.getElementById('web3ConnectedChip');
+  const btn = document.getElementById('web3SendBtn');
+  if (web3Account) {
+    chip.classList.add('visible');
+    document.getElementById('web3ConnectedAddr').textContent = shortAddr(web3Account);
+    btn.classList.add('visible');
+  } else {
+    chip.classList.remove('visible');
+    btn.classList.remove('visible');
+  }
+}
+
+function shortAddr(addr) {
+  return addr ? addr.slice(0, 6) + '…' + addr.slice(-4) : '';
+}
+
+// [UPDATED] web3ConnectBrowser — now triggers network check after connection
+async function web3ConnectBrowser() {
+  if (!window.ethereum) {
+    showToast('⚠️ No wallet detected! Install MetaMask.');
+    return;
+  }
+  try {
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    if (accounts && accounts.length > 0) {
+      web3Account = accounts[0];
+      const chip = document.getElementById('web3ConnectedChip');
+      chip.classList.add('visible');
+      document.getElementById('web3ConnectedAddr').textContent = shortAddr(web3Account);
+      const btn = document.getElementById('web3SendBtn');
+      btn.classList.add('visible');
+      showToast('✓ Wallet connected!');
+
+      // [NEW] Immediately verify the network after connecting
+      if (web3TargetChainId) {
+        await checkNetworkMismatch();
+      }
+    }
+  } catch (err) {
+    showToast('❌ Connection rejected');
+    console.error(err);
+  }
+}
+
+/**
+ * [NEW] checkNetworkMismatch
+ * Reads current chain from the injected provider and compares to web3TargetChainId.
+ * Shows the warning banner if they don't match.
+ */
+async function checkNetworkMismatch() {
+  if (!window.ethereum || !web3TargetChainId) return;
+  try {
+    const chainHex = await window.ethereum.request({ method: 'eth_chainId' });
+    const currentChain = parseInt(chainHex, 16);
+    const banner = document.getElementById('networkMismatchBanner');
+
+    if (currentChain !== web3TargetChainId) {
+      // Wrong network — show banner with details
+      const currentName = CHAIN_NAMES[currentChain] || `Chain ID ${currentChain}`;
+      const requiredName = CHAIN_NAMES[web3TargetChainId] || `Chain ID ${web3TargetChainId}`;
+      document.getElementById('nmbSubText').textContent =
+        `You are on ${currentName}. This address requires ${requiredName}. Tap below to switch automatically.`;
+      banner.classList.add('visible');
+    } else {
+      // Correct network — hide banner
+      banner.classList.remove('visible');
+    }
+  } catch (err) {
+    console.warn('Network check failed:', err);
+  }
+}
+
+/**
+ * [NEW] switchToRequiredNetwork
+ * Requests MetaMask/wallet to switch to the required chain via EIP-3326.
+ * Attempts to add the chain (EIP-3085) if it's not yet configured in the wallet.
+ */
+async function switchToRequiredNetwork() {
+  if (!window.ethereum || !web3TargetChainId) return;
+  const chainHex = '0x' + web3TargetChainId.toString(16);
+  try {
+    await window.ethereum.request({
+      method: 'wallet_switchEthereumChain',
+      params: [{ chainId: chainHex }],
+    });
+    // Success — hide warning and confirm
+    document.getElementById('networkMismatchBanner').classList.remove('visible');
+    showToast(`✓ Switched to ${CHAIN_NAMES[web3TargetChainId] || 'target network'}!`);
+  } catch (switchErr) {
+    if (switchErr.code === 4902) {
+      // Chain not added to wallet — inform user
+      showToast('⚠️ Add this network to your wallet first.');
+    } else if (switchErr.code === 4001) {
+      showToast('❌ Network switch rejected by user.');
+    } else {
+      showToast('❌ Could not switch network.');
+      console.error('Network switch error:', switchErr);
+    }
+  }
+}
+
+// [NEW] Listen for chain changes while modal is open — re-check mismatch
+if (window.ethereum) {
+  window.ethereum.on('chainChanged', () => {
+    if (document.getElementById('web3Overlay').classList.contains('open') && web3TargetChainId) {
+      checkNetworkMismatch();
+    }
+  });
+  window.ethereum.on('accountsChanged', (accounts) => {
+    if (accounts.length === 0) {
+      web3Account = null;
+      document.getElementById('web3ConnectedChip').classList.remove('visible');
+      document.getElementById('web3SendBtn').classList.remove('visible');
+    } else {
+      web3Account = accounts[0];
+      document.getElementById('web3ConnectedAddr').textContent = shortAddr(web3Account);
+    }
+  });
+}
+
+async function executeBrowserPayment() {
+  if (!web3Account || !web3TargetAddr) return;
+
+  // [NEW] Block payment if network is mismatched
+  if (web3TargetChainId) {
+    const chainHex = await window.ethereum.request({ method: 'eth_chainId' });
+    const currentChain = parseInt(chainHex, 16);
+    if (currentChain !== web3TargetChainId) {
+      showToast('⚠️ Wrong network! Please switch first.');
+      return;
+    }
+  }
+
+  const amountInput = document.getElementById('web3AmountInput');
+  const amountEth = parseFloat(amountInput.value);
+  if (!amountEth || amountEth <= 0) {
+    showToast('⚠️ Enter a valid amount');
+    return;
+  }
+
+  const amountWei = BigInt(Math.round(amountEth * 1e18));
+  const hexValue = '0x' + amountWei.toString(16);
+
+  document.getElementById('web3StepPick').style.display = 'none';
+  document.getElementById('web3StatusPending').classList.add('active');
+
+  try {
+    const txHash = await window.ethereum.request({
+      method: 'eth_sendTransaction',
+      params: [{
+        from: web3Account,
+        to: web3TargetAddr,
+        value: hexValue,
+        gas: '0x5208',
+      }]
+    });
+
+    document.getElementById('web3StatusPending').classList.remove('active');
+    document.getElementById('web3StatusSuccess').classList.add('active');
+
+    // Pick correct explorer for the chain
+    const explorerBase = (web3TargetChainId && EVM_EXPLORERS[web3TargetChainId])
+      ? EVM_EXPLORERS[web3TargetChainId]
+      : 'https://etherscan.io/tx/';
+
+    const link = document.getElementById('web3TxLink');
+    link.innerHTML = `<a href="${explorerBase}${txHash}" target="_blank" rel="noopener">View on Explorer ↗</a>`;
+    showToast('🎉 Transaction sent!');
+  } catch (err) {
+    document.getElementById('web3StatusPending').classList.remove('active');
+    document.getElementById('web3StatusError').classList.add('active');
+    document.getElementById('web3ErrMsg').textContent = err.message || 'Transaction rejected';
+    console.error(err);
+  }
+}
+
+// ============================
+// [NEW] GAS TRACKER
+// Fetches live gas prices from public APIs for ETH, BNB, Polygon.
+// Refresh cycle: 60 seconds. Manual refresh via button.
+// ============================
+let gasRefreshInterval = null;
+let gasCountdownInterval = null;
+let gasCountdownSeconds = 60;
+let gasWidgetCollapsed = false;
+
+/**
+ * Fetch Ethereum gas prices from Etherscan public API.
+ * Returns { safe, standard, fast } in gwei, or null on failure.
+ */
+async function fetchEthGas() {
+  try {
+    const resp = await fetch(
+      'https://api.etherscan.io/api?module=gastracker&action=gasoracle',
+      { signal: AbortSignal.timeout(6000) }
+    );
+    const data = await resp.json();
+    if (data.status === '1' && data.result) {
+      return {
+        safe: parseFloat(data.result.SafeGasPrice),
+        standard: parseFloat(data.result.ProposeGasPrice),
+        fast: parseFloat(data.result.FastGasPrice),
+      };
+    }
+    return null;
+  } catch { return null; }
+}
+
+/**
+ * Fetch BNB Chain gas prices from BscScan public API.
+ */
+async function fetchBnbGas() {
+  try {
+    const resp = await fetch(
+      'https://api.bscscan.com/api?module=gastracker&action=gasoracle',
+      { signal: AbortSignal.timeout(6000) }
+    );
+    const data = await resp.json();
+    if (data.status === '1' && data.result) {
+      return {
+        safe: parseFloat(data.result.SafeGasPrice),
+        standard: parseFloat(data.result.ProposeGasPrice),
+        fast: parseFloat(data.result.FastGasPrice),
+      };
+    }
+    return null;
+  } catch { return null; }
+}
+
+/**
+ * Fetch Polygon gas prices from official Polygon Gas Station v2.
+ */
+async function fetchMaticGas() {
+  try {
+    const resp = await fetch(
+      'https://gasstation.polygon.technology/v2',
+      { signal: AbortSignal.timeout(6000) }
+    );
+    const data = await resp.json();
+    if (data && data.standard) {
+      return {
+        safe: Math.round(data.safeLow?.maxFee ?? data.standard.maxFee),
+        standard: Math.round(data.standard.maxFee),
+        fast: Math.round(data.fast?.maxFee ?? data.standard.maxFee),
+      };
+    }
+    return null;
+  } catch { return null; }
+}
+
+/**
+ * Classify a gas value into low/med/high tier for color coding.
+ * Thresholds differ per chain.
+ */
+function gasClass(val, chain) {
+  if (chain === 'eth') {
+    if (val <= 15) return 'low';
+    if (val <= 40) return 'med';
+    return 'high';
+  }
+  if (chain === 'bnb') {
+    if (val <= 3) return 'low';
+    if (val <= 7) return 'med';
+    return 'high';
+  }
+  if (chain === 'matic') {
+    if (val <= 50) return 'low';
+    if (val <= 150) return 'med';
+    return 'high';
+  }
+  return 'med';
+}
+
+/**
+ * Render gas values into the widget DOM elements.
+ * Shows safe/standard/fast with color-coded pills.
+ */
+function renderGasValues(elementId, data, chain) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+
+  if (!data) {
+    el.innerHTML = `<span class="gas-val" style="color:#555;">N/A</span>`;
+    return;
+  }
+
+  el.innerHTML = `
+    <span class="gas-val ${gasClass(data.safe, chain)}" title="Safe">${data.safe}</span>
+    <span class="gas-val ${gasClass(data.standard, chain)}" title="Standard">${data.standard}</span>
+    <span class="gas-val ${gasClass(data.fast, chain)}" title="Fast">${data.fast}</span>
+    <span class="gas-gwei-label">gwei</span>
+  `;
+}
+
+/**
+ * Main gas fetch + render cycle.
+ */
+async function fetchAndRenderGas() {
+  // Show spinning refresh icon
+  document.getElementById('gasRefreshBtn').classList.add('spinning');
+  document.getElementById('gasLiveDot').classList.remove('error');
+
+  // Stagger requests to avoid rate limits
+  const [ethData, bnbData, maticData] = await Promise.allSettled([
+    fetchEthGas(),
+    fetchBnbGas(),
+    fetchMaticGas(),
+  ]);
+
+  renderGasValues('ethGasValues', ethData.value ?? null, 'eth');
+  renderGasValues('bnbGasValues', bnbData.value ?? null, 'bnb');
+  renderGasValues('maticGasValues', maticData.value ?? null, 'matic');
+
+  // If all failed, mark error state
+  const anySuccess = [ethData, bnbData, maticData].some(r => r.status === 'fulfilled' && r.value);
+  if (!anySuccess) document.getElementById('gasLiveDot').classList.add('error');
+
+  document.getElementById('gasRefreshBtn').classList.remove('spinning');
+
+  // Reset countdown
+  gasCountdownSeconds = 60;
+}
+
+/** Manual refresh via button. */
+function manualRefreshGas() {
+  clearInterval(gasCountdownInterval);
+  fetchAndRenderGas();
+  startGasCountdown();
+}
+
+/** Countdown display: "Refresh in Xs" */
+function startGasCountdown() {
+  clearInterval(gasCountdownInterval);
+  gasCountdownSeconds = 60;
+  const el = document.getElementById('gasRefreshCountdown');
+
+  gasCountdownInterval = setInterval(() => {
+    gasCountdownSeconds--;
+    if (el) el.textContent = `Refresh in ${gasCountdownSeconds}s`;
+    if (gasCountdownSeconds <= 0) {
+      clearInterval(gasCountdownInterval);
+      fetchAndRenderGas().then(startGasCountdown);
+    }
+  }, 1000);
+}
+
+/** Toggle gas widget collapsed/expanded. */
+function toggleGasWidget() {
+  gasWidgetCollapsed = !gasWidgetCollapsed;
+  const widget = document.getElementById('gasWidget');
+  const body = document.getElementById('gasBody');
+  const icon = document.getElementById('gasChevronIcon');
+
+  if (gasWidgetCollapsed) {
+    body.style.display = 'none';
+    icon.style.transform = 'rotate(180deg)';
+  } else {
+    body.style.display = 'block';
+    icon.style.transform = 'rotate(0deg)';
+  }
+}
+
+/** Bootstrap gas tracker on page ready. */
+function startGasTracker() {
+  fetchAndRenderGas().then(startGasCountdown);
+}
+
+// ============================
+// INIT
+// ============================
+buildWallets();
+observeReveal();
+startGasTracker();  // [NEW] Start live gas tracker
+</script>
+</body>
+</html>

@@ -45,10 +45,30 @@
         <button class="toggle-btn" onclick="app.setFiat('EUR')">EUR</button>
         <button class="toggle-btn" onclick="app.setFiat('GBP')">GBP</button>
       </div>
-      <!-- Language Toggle (Yeni dil eklediğinde butonunu buraya ekleyebilirsin) -->
-      <div class="toggle-group lang-toggle">
-        <button class="toggle-btn active" id="btnEN" onclick="app.setLang('en')">EN</button>
-        <button class="toggle-btn" id="btnDE" onclick="app.setLang('de')">DE</button>
+      <!-- Language Toggle (20 Dil İçin Şık Dropdown) -->
+      <div class="toggle-group lang-toggle" style="background: transparent;">
+        <select id="langSelect" onchange="app.setLang(this.value)" class="toggle-btn" style="appearance: none; -webkit-appearance: none; background: transparent; padding-right: 22px; cursor: pointer; outline: none; border: none; background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23777777\' width=\'12px\' height=\'12px\'><path d=\'M7 10l5 5 5-5z\'/></svg>'); background-repeat: no-repeat; background-position: right 6px center;">
+          <option value="en">EN</option>
+          <option value="tr">TR</option>
+          <option value="de">DE</option>
+          <option value="fr">FR</option>
+          <option value="ru">RU</option>
+          <option value="zh">ZH</option>
+          <option value="es">ES</option>
+          <option value="ar">AR</option>
+          <option value="hi">HI</option>
+          <option value="pt">PT</option>
+          <option value="ja">JA</option>
+          <option value="ko">KO</option>
+          <option value="it">IT</option>
+          <option value="vi">VI</option>
+          <option value="id">ID</option>
+          <option value="th">TH</option>
+          <option value="nl">NL</option>
+          <option value="pl">PL</option>
+          <option value="bn">BN</option>
+          <option value="ur">UR</option>
+        </select>
       </div>
     </div>
   </div>
@@ -241,7 +261,7 @@
 <!-- Toast Container -->
 <div id="toast-container"></div>
 
-<!-- Parçalanmış JS Dosyalarının Yüklenmesi (Sıralama Önemli!) -->
+<!-- Parçalanmış JS Dosyalarının Yüklenmesi -->
 <script src="i18n.js"></script>
 <script src="config.js"></script>
 <script src="app.js"></script>

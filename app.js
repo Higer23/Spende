@@ -44,11 +44,14 @@ class HigerApp {
     this.renderWallets();
   }
 
+  // YENİ DİL SİSTEMİ: Dropdown yapısı ve config'den dil okuma güncellendi.
   applyLanguage() {
-    document.getElementById('btnEN').classList.toggle('active', this.lang === 'en');
-    document.getElementById('btnDE').classList.toggle('active', this.lang === 'de');
+    const select = document.getElementById('langSelect');
+    if(select) select.value = this.lang;
     
-    const dict = CONFIG.i18n[this.lang];
+    // Eğer tarayıcıda kayıtlı dil yoksa varsayılan olarak İngilizce kullan
+    const dict = CONFIG.i18n[this.lang] || CONFIG.i18n['en'];
+    
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       if (dict[key]) el.innerHTML = dict[key];
@@ -110,14 +113,17 @@ class HigerApp {
       `).join('');
 
       let warningHTML = group.isTestnet 
-        ? `<div class="testnet-warn"><i class="fas fa-triangle-exclamation"></i> ${CONFIG.i18n[this.lang].testnetWarn}</div>` 
+        ? `<div class="testnet-warn"><i class="fas fa-triangle-exclamation"></i> ${CONFIG.i18n[this.lang]?.testnetWarn || CONFIG.i18n['en'].testnetWarn}</div>` 
         : '';
+
+      // Eğer config.js içinde çevrilmiş wallet başlığı yoksa otomatik olarak ingilizceye döner. (Sistemin çökmemesi için koruma)
+      const groupName = group.label[this.lang] || group.label['en'];
 
       groupEl.innerHTML = `
         <div class="group-header" onclick="this.parentElement.classList.toggle('open')">
           <div class="group-title-wrap">
             <i class="${group.icon} group-icon"></i>
-            <span class="group-name">${group.label[this.lang]}</span>
+            <span class="group-name">${groupName}</span>
             <span class="group-badge">${group.items.length}</span>
           </div>
           <i class="fas fa-chevron-down group-chevron"></i>
@@ -180,7 +186,7 @@ class HigerApp {
 
   openQRDrawer(name, ticker, chain, scheme, addr) {
     if(!addr) {
-      this.showToast(CONFIG.i18n[this.lang].toastError, 'error');
+      this.showToast((CONFIG.i18n[this.lang] || CONFIG.i18n['en']).toastError, 'error');
       return;
     }
     
@@ -315,10 +321,12 @@ class HigerApp {
     let link = document.createElement('a');
     link.download = `HIGER-${this.currentDrawerData.ticker}-QR.png`;
     
+    const dict = CONFIG.i18n[this.lang] || CONFIG.i18n['en'];
+    
     if (canvas && canvas.style.display !== 'none') {
       link.href = canvas.toDataURL('image/png');
       link.click();
-      this.showToast(CONFIG.i18n[this.lang].toastSaved);
+      this.showToast(dict.toastSaved);
     } else if (img && img.style.display !== 'none') {
       fetch(img.src)
         .then(res => res.blob())
@@ -327,24 +335,25 @@ class HigerApp {
           link.href = url;
           link.click();
           window.URL.revokeObjectURL(url);
-          this.showToast(CONFIG.i18n[this.lang].toastSaved);
+          this.showToast(dict.toastSaved);
         })
         .catch(() => {
           link.href = img.src;
           link.click();
-          this.showToast(CONFIG.i18n[this.lang].toastSaved);
+          this.showToast(dict.toastSaved);
         });
     }
   }
 
   copyToClipboard(text, btnEl = null) {
+    const dict = CONFIG.i18n[this.lang] || CONFIG.i18n['en'];
     if(!text) {
-      this.showToast(CONFIG.i18n[this.lang].toastError, 'error');
+      this.showToast(dict.toastError, 'error');
       return;
     }
 
     navigator.clipboard.writeText(text).then(() => {
-      this.showToast(CONFIG.i18n[this.lang].toastCopied);
+      this.showToast(dict.toastCopied);
       if (btnEl) {
         const originalHTML = btnEl.innerHTML;
         btnEl.innerHTML = '<i class="fas fa-check"></i>';

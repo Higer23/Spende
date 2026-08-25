@@ -1,53 +1,65 @@
 // i18n.js
-// HIGER PROTOCOL Dil Dosyası (Yeni dilleri bu objeye ekleyebilirsin)
+// HIGER PROTOCOL - TOP 20 GLOBAL LANGUAGES
 
 const I18N_DATA = {
   en: {
-    heroBadge: "DECENTRALIZED VAULT",
-    heroTitle: "DONATION<br>PROTOCOL",
-    heroDesc: "Supporting the next generation of code. Fully transparent, fully secure routing system. No intermediaries.",
-    heroMetaText: "DEVELOPED BY",
-    statAddresses: "ADDRESSES",
-    statNetworks: "NETWORKS",
-    statAge: "YEARS YOUNG",
-    statSecurity: "COLD STORAGE",
-    trustTitle: "HARDWARE ENCRYPTED ROUTING",
-    trustSub: "All generated addresses belong directly to an offline SafePal Cold Wallet. Zero hot wallet exposure. Private keys are air-gapped permanently.",
-    searchPlaceholder: "SEARCH NETWORK OR COIN TICKER...",
-    footerText: "© 2026 HIGER (HALIL GERÇEK). ALL RIGHTS RESERVED.<br>NOT FINANCIAL ADVICE. ALL TRANSFERS ARE FINAL ON THE BLOCKCHAIN.",
-    drawerAddrLabel: "DESTINATION ADDRESS",
-    fiatCalcLabel: "CALCULATE AMOUNT",
-    fiatApprox: "APPROX. FIAT:",
-    btnCopy: "COPY",
-    btnSave: "SAVE QR",
-    statusTitle: "SYSTEM STATUS",
-    testnetWarn: "TESTNET - DO NOT SEND REAL ASSETS",
-    toastCopied: "COPIED TO CLIPBOARD",
-    toastSaved: "QR CODE SAVED",
-    toastError: "NO ADDRESS SET"
+    heroBadge: "DECENTRALIZED VAULT", heroTitle: "DONATION<br>PROTOCOL", heroDesc: "Supporting the next generation of code. Fully transparent, fully secure routing system. No intermediaries.", heroMetaText: "DEVELOPED BY", statAddresses: "ADDRESSES", statNetworks: "NETWORKS", statAge: "YEARS YOUNG", statSecurity: "COLD STORAGE", trustTitle: "HARDWARE ENCRYPTED ROUTING", trustSub: "All generated addresses belong directly to an offline SafePal Cold Wallet. Zero hot wallet exposure. Private keys are air-gapped permanently.", searchPlaceholder: "SEARCH NETWORK OR COIN TICKER...", footerText: "© 2026 HIGER (HALIL GERÇEK). ALL RIGHTS RESERVED.<br>NOT FINANCIAL ADVICE. ALL TRANSFERS ARE FINAL ON THE BLOCKCHAIN.", drawerAddrLabel: "DESTINATION ADDRESS", fiatCalcLabel: "CALCULATE AMOUNT", fiatApprox: "APPROX. FIAT:", btnCopy: "COPY", btnSave: "SAVE QR", statusTitle: "SYSTEM STATUS", testnetWarn: "TESTNET - DO NOT SEND REAL ASSETS", toastCopied: "COPIED TO CLIPBOARD", toastSaved: "QR CODE SAVED", toastError: "NO ADDRESS SET"
+  },
+  tr: {
+    heroBadge: "MERKEZİYETSİZ KASA", heroTitle: "BAĞIŞ<br>PROTOKOLÜ", heroDesc: "Geleceğin kodlarını destekliyor. Tamamen şeffaf, tam güvenli yönlendirme sistemi. Aracı yok.", heroMetaText: "GELİŞTİRİCİ:", statAddresses: "ADRES", statNetworks: "AĞ", statAge: "YAŞINDA", statSecurity: "SOĞUK CÜZDAN", trustTitle: "DONANIM ŞİFRELİ YÖNLENDİRME", trustSub: "Tüm oluşturulan adresler doğrudan çevrimdışı bir SafePal Soğuk Cüzdanına aittir. Sıfır sıcak cüzdan riski. Özel anahtarlar kalıcı olarak izoledir.", searchPlaceholder: "AĞ VEYA COIN ARA...", footerText: "© 2026 HIGER (HALIL GERÇEK). TÜM HAKLARI SAKLIDIR.<br>YATIRIM TAVSİYESİ DEĞİLDİR. TÜM TRANSFERLER BLOCKCHAIN ÜZERİNDE NİHAİDİR.", drawerAddrLabel: "HEDEF ADRES", fiatCalcLabel: "MİKTAR HESAPLA", fiatApprox: "YAKLAŞIK FIAT:", btnCopy: "KOPYALA", btnSave: "QR KAYDET", statusTitle: "SİSTEM DURUMU", testnetWarn: "TESTNET - GERÇEK VARLIK GÖNDERMEYİN", toastCopied: "PANOTA KOPYALANDI", toastSaved: "QR KOD KAYDEDİLDİ", toastError: "ADRES BELİRLENMEDİ"
   },
   de: {
-    heroBadge: "DEZENTRALER TRESOR",
-    heroTitle: "SPENDEN<br>PROTOKOLL",
-    heroDesc: "Unterstützung der nächsten Code-Generation. Vollständig transparentes, völlig sicheres Routing-System. Keine Vermittler.",
-    heroMetaText: "ENTWICKELT VON",
-    statAddresses: "ADRESSEN",
-    statNetworks: "NETZWERKE",
-    statAge: "JAHRE JUNG",
-    statSecurity: "KALTSPEICHERUNG",
-    trustTitle: "HARDWARE-VERSCHLÜSSELTES ROUTING",
-    trustSub: "Alle generierten Adressen gehören direkt zu einer Offline-SafePal-Cold-Wallet. Null Risiko. Private Schlüssel sind dauerhaft isoliert.",
-    searchPlaceholder: "NETZWERK ODER COIN SUCHEN...",
-    footerText: "© 2026 HIGER (HALIL GERÇEK). ALLE RECHTE VORBEHALTEN.<br>KEINE FINANZBERATUNG. ALLE ÜBERWEISUNGEN SIND ENDGÜLTIG.",
-    drawerAddrLabel: "ZIELADRESSE",
-    fiatCalcLabel: "BETRAG BERECHNEN",
-    fiatApprox: "CA. FIAT:",
-    btnCopy: "KOPIEREN",
-    btnSave: "QR SPEICHERN",
-    statusTitle: "SYSTEMSTATUS",
-    testnetWarn: "TESTNET - KEINE ECHTEN ASSETS SENDEN",
-    toastCopied: "IN DIE ZWISCHENABLAGE KOPIERT",
-    toastSaved: "QR CODE GESPEICHERT",
-    toastError: "KEINE ADRESSE FESTGELEGT"
+    heroBadge: "DEZENTRALER TRESOR", heroTitle: "SPENDEN<br>PROTOKOLL", heroDesc: "Unterstützung der nächsten Code-Generation. Vollständig transparentes, völlig sicheres Routing-System. Keine Vermittler.", heroMetaText: "ENTWICKELT VON", statAddresses: "ADRESSEN", statNetworks: "NETZWERKE", statAge: "JAHRE JUNG", statSecurity: "KALTSPEICHERUNG", trustTitle: "HARDWARE-VERSCHLÜSSELTES ROUTING", trustSub: "Alle generierten Adressen gehören direkt zu einer Offline-SafePal-Cold-Wallet. Null Risiko. Private Schlüssel sind dauerhaft isoliert.", searchPlaceholder: "NETZWERK ODER COIN SUCHEN...", footerText: "© 2026 HIGER (HALIL GERÇEK). ALLE RECHTE VORBEHALTEN.<br>KEINE FINANZBERATUNG. ALLE ÜBERWEISUNGEN SIND ENDGÜLTIG.", drawerAddrLabel: "ZIELADRESSE", fiatCalcLabel: "BETRAG BERECHNEN", fiatApprox: "CA. FIAT:", btnCopy: "KOPIEREN", btnSave: "QR SPEICHERN", statusTitle: "SYSTEMSTATUS", testnetWarn: "TESTNET - KEINE ECHTEN ASSETS SENDEN", toastCopied: "IN DIE ZWISCHENABLAGE KOPIERT", toastSaved: "QR CODE GESPEICHERT", toastError: "KEINE ADRESSE FESTGELEGT"
+  },
+  fr: {
+    heroBadge: "COFFRE DÉCENTRALISÉ", heroTitle: "PROTOCOLE<br>DE DON", heroDesc: "Soutenir la prochaine génération de code. Système de routage entièrement transparent et sécurisé. Aucun intermédiaire.", heroMetaText: "DÉVELOPPÉ PAR", statAddresses: "ADRESSES", statNetworks: "RÉSEAUX", statAge: "ANS", statSecurity: "STOCKAGE À FROID", trustTitle: "ROUTAGE CRYPTÉ MATÉRIEL", trustSub: "Toutes les adresses appartiennent directement à un SafePal Cold Wallet hors ligne. Aucune exposition au portefeuille chaud.", searchPlaceholder: "RECHERCHER UN RÉSEAU OU UN COIN...", footerText: "© 2026 HIGER (HALIL GERÇEK). TOUS DROITS RÉSERVÉS.<br>AUCUN CONSEIL FINANCIER. LES TRANSFERTS SONT DÉFINITIFS.", drawerAddrLabel: "ADRESSE DE DESTINATION", fiatCalcLabel: "CALCULER LE MONTANT", fiatApprox: "FIAT APPROX:", btnCopy: "COPIER", btnSave: "SAUVEGARDER QR", statusTitle: "ÉTAT DU SYSTÈME", testnetWarn: "TESTNET - NE PAS ENVOYER D'ACTIFS RÉELS", toastCopied: "COPIÉ DANS LE PRESSE-PAPIERS", toastSaved: "QR CODE SAUVEGARDÉ", toastError: "AUCUNE ADRESSE DÉFINIE"
+  },
+  ru: {
+    heroBadge: "ДЕЦЕНТРАЛИЗОВАННОЕ ХРАНИЛИЩЕ", heroTitle: "ПРОТОКОЛ<br>ПОЖЕРТВОВАНИЙ", heroDesc: "Поддержка следующего поколения кода. Полностью прозрачная, безопасная система. Без посредников.", heroMetaText: "РАЗРАБОТАНО", statAddresses: "АДРЕСА", statNetworks: "СЕТИ", statAge: "ЛЕТ", statSecurity: "ХОЛОДНОЕ ХРАНЕНИЕ", trustTitle: "АППАРАТНО ЗАШИФРОВАННАЯ МАРШРУТИЗАЦИЯ", trustSub: "Все адреса принадлежат автономному холодному кошельку SafePal. Никакого риска горячего кошелька.", searchPlaceholder: "ПОИСК СЕТИ ИЛИ МОНЕТЫ...", footerText: "© 2026 HIGER (ХАЛИЛ ГЕРЧЕК). ВСЕ ПРАВА ЗАЩИЩЕНЫ.<br>НЕ ФИНАНСОВЫЙ СОВЕТ. ПЕРЕВОДЫ НЕОБРАТИМЫ.", drawerAddrLabel: "АДРЕС НАЗНАЧЕНИЯ", fiatCalcLabel: "РАССЧИТАТЬ СУММУ", fiatApprox: "ПРИМЕРНО FIAT:", btnCopy: "КОПИРОВАТЬ", btnSave: "СОХРАНИТЬ QR", statusTitle: "СТАТУС СИСТЕМЫ", testnetWarn: "TESTNET - НЕ ОТПРАВЛЯЙТЕ РЕАЛЬНЫЕ АКТИВЫ", toastCopied: "СКОПИРОВАНО", toastSaved: "QR СОХРАНЕН", toastError: "АДРЕС НЕ УСТАНОВЛЕН"
+  },
+  zh: {
+    heroBadge: "去中心化金库", heroTitle: "捐赠<br>协议", heroDesc: "支持下一代代码。完全透明、安全的路由系统。无中间人。", heroMetaText: "开发者", statAddresses: "地址", statNetworks: "网络", statAge: "岁", statSecurity: "冷存储", trustTitle: "硬件加密路由", trustSub: "所有生成的地址直接属于离线 SafePal 冷钱包。零热钱包暴露风险。私钥永久隔离。", searchPlaceholder: "搜索网络或代币...", footerText: "© 2026 HIGER (HALIL GERÇEK). 保留所有权利。<br>非财务建议。区块链上的转账均为最终不可逆。", drawerAddrLabel: "目标地址", fiatCalcLabel: "计算金额", fiatApprox: "大约法币:", btnCopy: "复制", btnSave: "保存 QR", statusTitle: "系统状态", testnetWarn: "测试网 - 请勿发送真实资产", toastCopied: "已复制到剪贴板", toastSaved: "QR 码已保存", toastError: "未设置地址"
+  },
+  es: {
+    heroBadge: "BÓVEDA DESCENTRALIZADA", heroTitle: "PROTOCOLO<br>DE DONACIÓN", heroDesc: "Apoyando la próxima generación de código. Sistema de enrutamiento 100% transparente y seguro.", heroMetaText: "DESARROLLADO POR", statAddresses: "DIRECCIONES", statNetworks: "REDES", statAge: "AÑOS", statSecurity: "ALMACENAMIENTO EN FRÍO", trustTitle: "ENRUTAMIENTO CIFRADO POR HARDWARE", trustSub: "Todas las direcciones pertenecen a una billetera de hardware SafePal fuera de línea. Cero exposición.", searchPlaceholder: "BUSCAR RED O MONEDA...", footerText: "© 2026 HIGER (HALIL GERÇEK). TODOS LOS DERECHOS RESERVADOS.<br>NO ES CONSEJO FINANCIERO.", drawerAddrLabel: "DIRECCIÓN DE DESTINO", fiatCalcLabel: "CALCULAR CANTIDAD", fiatApprox: "FIAT APROX:", btnCopy: "COPIAR", btnSave: "GUARDAR QR", statusTitle: "ESTADO DEL SISTEMA", testnetWarn: "TESTNET - NO ENVIAR ACTIVOS REALES", toastCopied: "COPIADO AL PORTAPAPELES", toastSaved: "CÓDIGO QR GUARDADO", toastError: "SIN DIRECCIÓN"
+  },
+  ar: {
+    heroBadge: "قبو لا مركزي", heroTitle: "بروتوكول<br>التبرع", heroDesc: "دعم الجيل القادم من الكود. نظام توجيه آمن وشفاف بالكامل. بدون وسطاء.", heroMetaText: "تطوير بواسطة", statAddresses: "العناوين", statNetworks: "الشبكات", statAge: "سنوات", statSecurity: "تخزين بارد", trustTitle: "توجيه مشفر بالأجهزة", trustSub: "جميع العناوين تنتمي مباشرة إلى محفظة SafePal باردة غير متصلة بالإنترنت. لا توجد مخاطر.", searchPlaceholder: "ابحث عن شبكة أو عملة...", footerText: "© 2026 HIGER (HALIL GERÇEK). جميع الحقوق محفوظة.<br>ليست نصيحة مالية. جميع التحويلات نهائية.", drawerAddrLabel: "عنوان الوجهة", fiatCalcLabel: "حساب المبلغ", fiatApprox: "العملة الورقية تقريبًا:", btnCopy: "نسخ", btnSave: "حفظ QR", statusTitle: "حالة النظام", testnetWarn: "شبكة اختبار - لا ترسل أصول حقيقية", toastCopied: "تم النسخ", toastSaved: "تم حفظ QR", toastError: "لم يتم تعيين عنوان"
+  },
+  hi: {
+    heroBadge: "विकेंद्रीकृत वॉल्ट", heroTitle: "दान<br>प्रोटोकॉल", heroDesc: "कोड की अगली पीढ़ी का समर्थन। पूरी तरह पारदर्शी, पूरी तरह सुरक्षित रूटिंग सिस्टम। कोई बिचौलिया नहीं।", heroMetaText: "द्वारा विकसित", statAddresses: "पते", statNetworks: "नेटवर्क", statAge: "साल की उम्र", statSecurity: "कोल्ड स्टोरेज", trustTitle: "हार्डवेयर एन्क्रिप्टेड रूटिंग", trustSub: "सभी पते सीधे ऑफ़लाइन सेफपैल कोल्ड वॉलेट के हैं। कोई जोखिम नहीं।", searchPlaceholder: "नेटवर्क या सिक्का खोजें...", footerText: "© 2026 HIGER (HALIL GERÇEK)। सभी अधिकार सुरक्षित।<br>वित्तीय सलाह नहीं।", drawerAddrLabel: "गंतव्य पता", fiatCalcLabel: "राशि की गणना करें", fiatApprox: "लगभग फिएट:", btnCopy: "कॉपी करें", btnSave: "QR सहेजें", statusTitle: "सिस्टम स्थिति", testnetWarn: "टेस्टनेट - वास्तविक संपत्ति न भेजें", toastCopied: "क्लिपबोर्ड पर कॉपी किया गया", toastSaved: "QR कोड सहेजा गया", toastError: "कोई पता सेट नहीं"
+  },
+  pt: {
+    heroBadge: "COFRE DESCENTRALIZADO", heroTitle: "PROTOCOLO<br>DE DOAÇÃO", heroDesc: "Apoiando a próxima geração de código. Sistema totalmente transparente e seguro. Sem intermediários.", heroMetaText: "DESENVOLVIDO POR", statAddresses: "ENDEREÇOS", statNetworks: "REDES", statAge: "ANOS", statSecurity: "ARMAZENAMENTO FRIO", trustTitle: "ROTEAMENTO CRIPTOGRAFADO DE HARDWARE", trustSub: "Todos os endereços gerados pertencem diretamente a uma carteira SafePal offline. Zero exposição.", searchPlaceholder: "PESQUISAR REDE OU MOEDA...", footerText: "© 2026 HIGER (HALIL GERÇEK). TODOS OS DIREITOS RESERVADOS.<br>NÃO É CONSELHO FINANCEIRO.", drawerAddrLabel: "ENDEREÇO DE DESTINO", fiatCalcLabel: "CALCULAR VALOR", fiatApprox: "FIAT APROX:", btnCopy: "COPIAR", btnSave: "SALVAR QR", statusTitle: "STATUS DO SISTEMA", testnetWarn: "TESTNET - NÃO ENVIE ATIVOS REAIS", toastCopied: "COPIADO PARA A ÁREA DE TRANSFERÊNCIA", toastSaved: "CÓDIGO QR SALVO", toastError: "NENHUM ENDEREÇO DEFINIDO"
+  },
+  ja: {
+    heroBadge: "分散型保管庫", heroTitle: "寄付<br>プロトコル", heroDesc: "次世代のコードをサポートします。完全な透明性とセキュリティを備えたルーティングシステム。", heroMetaText: "開発者", statAddresses: "アドレス", statNetworks: "ネットワーク", statAge: "歳", statSecurity: "コールドストレージ", trustTitle: "ハードウェア暗号化ルーティング", trustSub: "生成されたすべてのアドレスはオフラインのSafePalコールドウォレットに直接属します。リスクゼロ。", searchPlaceholder: "ネットワークまたはコインを検索...", footerText: "© 2026 HIGER (HALIL GERÇEK). 無断複写・転載を禁じます。<br>投資アドバイスではありません。", drawerAddrLabel: "宛先アドレス", fiatCalcLabel: "金額を計算する", fiatApprox: "およその法定通貨:", btnCopy: "コピー", btnSave: "QRを保存", statusTitle: "システムステータス", testnetWarn: "テストネット - 実際の資産を送信しないでください", toastCopied: "クリップボードにコピーされました", toastSaved: "QRコードが保存されました", toastError: "アドレスが設定されていません"
+  },
+  ko: {
+    heroBadge: "탈중앙화 금고", heroTitle: "기부<br>프로토콜", heroDesc: "차세대 코드를 지원합니다. 완벽하게 투명하고 안전한 라우팅 시스템.", heroMetaText: "개발자", statAddresses: "주소", statNetworks: "네트워크", statAge: "세", statSecurity: "콜드 스토리지", trustTitle: "하드웨어 암호화 라우팅", trustSub: "모든 주소는 오프라인 SafePal 콜드 월렛에 직접 속합니다. 위험 제로.", searchPlaceholder: "네트워크 또는 코인 검색...", footerText: "© 2026 HIGER (HALIL GERÇEK). 판권 소유.<br>재정적 조언이 아닙니다.", drawerAddrLabel: "목적지 주소", fiatCalcLabel: "금액 계산", fiatApprox: "약 법정화폐:", btnCopy: "복사", btnSave: "QR 저장", statusTitle: "시스템 상태", testnetWarn: "테스트넷 - 실제 자산을 보내지 마십시오", toastCopied: "클립보드에 복사됨", toastSaved: "QR 코드 저장됨", toastError: "주소 없음"
+  },
+  it: {
+    heroBadge: "CAVEAU DECENTRALIZZATO", heroTitle: "PROTOCOLLO<br>DI DONAZIONE", heroDesc: "Supportare la prossima generazione di codice. Sistema di routing completamente trasparente e sicuro.", heroMetaText: "SVILUPPATO DA", statAddresses: "INDIRIZZI", statNetworks: "RETI", statAge: "ANNI", statSecurity: "CONSERVAZIONE A FREDDO", trustTitle: "ROUTING CRITTOGRAFATO HARDWARE", trustSub: "Tutti gli indirizzi appartengono direttamente a un portafoglio SafePal offline. Rischio zero.", searchPlaceholder: "CERCA RETE O MONETA...", footerText: "© 2026 HIGER (HALIL GERÇEK). TUTTI I DIRITTI RISERVATI.<br>NON È UN CONSIGLIO FINANZIARIO.", drawerAddrLabel: "INDIRIZZO DI DESTINAZIONE", fiatCalcLabel: "CALCOLA IMPORTO", fiatApprox: "FIAT APPROX:", btnCopy: "COPIA", btnSave: "SALVA QR", statusTitle: "STATO DEL SISTEMA", testnetWarn: "TESTNET - NON INVIARE ASSET REALI", toastCopied: "COPIATO NEGLI APPUNTI", toastSaved: "CODICE QR SALVATO", toastError: "NESSUN INDIRIZZO"
+  },
+  vi: {
+    heroBadge: "KHO LƯU TRỮ PHÂN TÁN", heroTitle: "GIAO THỨC<br>QUYÊN GÓP", heroDesc: "Hỗ trợ thế hệ mã tiếp theo. Hệ thống định tuyến hoàn toàn minh bạch và an toàn.", heroMetaText: "PHÁT TRIỂN BỞI", statAddresses: "ĐỊA CHỈ", statNetworks: "MẠNG LƯỚI", statAge: "TUỔI", statSecurity: "LƯU TRỮ LẠNH", trustTitle: "ĐỊNH TUYẾN MÃ HÓA PHẦN CỨNG", trustSub: "Tất cả các địa chỉ đều thuộc về ví lạnh SafePal ngoại tuyến. Không có rủi ro.", searchPlaceholder: "TÌM KIẾM MẠNG HOẶC ĐỒNG TIỀN...", footerText: "© 2026 HIGER (HALIL GERÇEK). BẢO LƯU MỌI QUYỀN.<br>KHÔNG PHẢI LỜI KHUYÊN TÀI CHÍNH.", drawerAddrLabel: "ĐỊA CHỈ ĐÍCH", fiatCalcLabel: "TÍNH TOÁN SỐ TIỀN", fiatApprox: "KHOẢNG FIAT:", btnCopy: "SAO CHÉP", btnSave: "LƯU QR", statusTitle: "TRẠNG THÁI HỆ THỐNG", testnetWarn: "TESTNET - KHÔNG GỬI TÀI SẢN THẬT", toastCopied: "ĐÃ SAO CHÉP VÀO BẢNG TẠM", toastSaved: "ĐÃ LƯU MÃ QR", toastError: "CHƯA THIẾT LẬP ĐỊA CHỈ"
+  },
+  id: {
+    heroBadge: "BRANKAS TERDESENTRALISASI", heroTitle: "PROTOKOL<br>DONASI", heroDesc: "Mendukung kode generasi berikutnya. Sistem perutean yang sepenuhnya transparan dan aman.", heroMetaText: "DIKEMBANGKAN OLEH", statAddresses: "ALAMAT", statNetworks: "JARINGAN", statAge: "TAHUN", statSecurity: "PENYIMPANAN DINGIN", trustTitle: "PERUTEAN TERENKRIPSI PERANGKAT KERAS", trustSub: "Semua alamat milik dompet dingin SafePal offline. Nol risiko.", searchPlaceholder: "CARI JARINGAN ATAU KOIN...", footerText: "© 2026 HIGER (HALIL GERÇEK). SELURUH HAK CIPTA.<br>BUKAN SARAN KEUANGAN.", drawerAddrLabel: "ALAMAT TUJUAN", fiatCalcLabel: "HITUNG JUMLAH", fiatApprox: "KIRA-KIRA FIAT:", btnCopy: "SALIN", btnSave: "SIMPAN QR", statusTitle: "STATUS SISTEM", testnetWarn: "TESTNET - JANGAN KIRIM ASET NYATA", toastCopied: "DISALIN KE PAPAN KLIP", toastSaved: "KODE QR DISIMPAN", toastError: "ALAMAT BELUM DIATUR"
+  },
+  th: {
+    heroBadge: "ห้องนิรภัยแบบกระจายศูนย์", heroTitle: "โปรโตคอล<br>การบริจาค", heroDesc: "สนับสนุนโค้ดรุ่นต่อไป ระบบการกำหนดเส้นทางที่โปร่งใสและปลอดภัยอย่างเต็มที่", heroMetaText: "พัฒนาโดย", statAddresses: "ที่อยู่", statNetworks: "เครือข่าย", statAge: "ปี", statSecurity: "การเก็บรักษาแบบเย็น", trustTitle: "การเข้ารหัสฮาร์ดแวร์", trustSub: "ที่อยู่ทั้งหมดเป็นของกระเป๋าเงิน SafePal ออฟไลน์ ไม่มีความเสี่ยง", searchPlaceholder: "ค้นหาเครือข่ายหรือเหรียญ...", footerText: "© 2026 HIGER (HALIL GERÇEK) สงวนลิขสิทธิ์<br>ไม่ใช่คำแนะนำทางการเงิน", drawerAddrLabel: "ที่อยู่ปลายทาง", fiatCalcLabel: "คำนวณจำนวนเงิน", fiatApprox: "ประมาณ FIAT:", btnCopy: "คัดลอก", btnSave: "บันทึก QR", statusTitle: "สถานะระบบ", testnetWarn: "TESTNET - อย่าส่งทรัพย์สินจริง", toastCopied: "คัดลอกไปยังคลิปบอร์ดแล้ว", toastSaved: "บันทึก QR CODE แล้ว", toastError: "ไม่ได้ตั้งค่าที่อยู่"
+  },
+  nl: {
+    heroBadge: "GEDECENTRALISEERDE KLUIS", heroTitle: "DONATIE<br>PROTOCOL", heroDesc: "Ondersteuning van de volgende generatie code. Volledig transparant, volledig veilig.", heroMetaText: "ONTWIKKELD DOOR", statAddresses: "ADRESSEN", statNetworks: "NETWERKEN", statAge: "JAAR JONG", statSecurity: "KOUDE OPSLAG", trustTitle: "HARDWARE VERSLEUTELDE ROUTING", trustSub: "Alle adressen behoren tot een offline SafePal cold wallet. Geen risico.", searchPlaceholder: "ZOEK NETWERK OF MUNT...", footerText: "© 2026 HIGER (HALIL GERÇEK). ALLE RECHTEN VOORBEHOUDEN.<br>GEEN FINANCIEEL ADVIES.", drawerAddrLabel: "BESTEMMINGSADRES", fiatCalcLabel: "BEREKEN BEDRAG", fiatApprox: "ONGEVEER FIAT:", btnCopy: "KOPIËREN", btnSave: "QR OPSLAAN", statusTitle: "SYSTEEMSTATUS", testnetWarn: "TESTNET - STUUR GEEN ECHTE ACTIVA", toastCopied: "GEKOPIEERD NAAR KLIPBORD", toastSaved: "QR-CODE OPGESLAGEN", toastError: "GEEN ADRES INGESTELD"
+  },
+  pl: {
+    heroBadge: "ZDECENTRALIZOWANY SKARBIEC", heroTitle: "PROTOKÓŁ<br>DAROWIZN", heroDesc: "Wspieranie nowej generacji kodu. W pełni przejrzysty i bezpieczny system.", heroMetaText: "STWORZONE PRZEZ", statAddresses: "ADRESY", statNetworks: "SIECI", statAge: "LAT", statSecurity: "ZIMNY PORTFEL", trustTitle: "SZYFROWANIE SPRZĘTOWE", trustSub: "Wszystkie adresy należą do portfela offline SafePal. Zero ryzyka.", searchPlaceholder: "SZUKAJ SIECI LUB MONETY...", footerText: "© 2026 HIGER (HALIL GERÇEK). WSZELKIE PRAWA ZASTRZEŻONE.<br>TO NIE JEST PORADA FINANSOWA.", drawerAddrLabel: "ADRES DOCELOWY", fiatCalcLabel: "OBLICZ KWOTĘ", fiatApprox: "OKOŁO FIAT:", btnCopy: "KOPIUJ", btnSave: "ZAPISZ QR", statusTitle: "STATUS SYSTEMU", testnetWarn: "TESTNET - NIE WYSYŁAJ PRAWDZIWYCH ŚRODKÓW", toastCopied: "SKOPIOWANO DO SCHOWKA", toastSaved: "KOD QR ZAPISANY", toastError: "BRAK ADRESU"
+  },
+  bn: {
+    heroBadge: "বিকেন্দ্রীভূত ভল্ট", heroTitle: "দান<br>প্রোটোকল", heroDesc: "পরবর্তী প্রজন্মের কোড সমর্থন করা। সম্পূর্ণ স্বচ্ছ, সম্পূর্ণ নিরাপদ।", heroMetaText: "দ্বারা উন্নত", statAddresses: "ঠিকানা", statNetworks: "নেটওয়ার্ক", statAge: "বছর", statSecurity: "কোল্ড স্টোরেজ", trustTitle: "হার্ডওয়্যার এনক্রিপ্টেড রাউটিং", trustSub: "সমস্ত ঠিকানা একটি অফলাইন সেফপাল কোল্ড ওয়ালেটের অন্তর্গত। কোন ঝুঁকি নেই।", searchPlaceholder: "নেটওয়ার্ক বা কয়েন অনুসন্ধান করুন...", footerText: "© 2026 HIGER (HALIL GERÇEK)। সমস্ত অধিকার সংরক্ষিত।<br>আর্থিক পরামর্শ নয়।", drawerAddrLabel: "গন্তব্য ঠিকানা", fiatCalcLabel: "পরিমাণ গণনা করুন", fiatApprox: "প্রায় ফিয়াট:", btnCopy: "কপি", btnSave: "QR সংরক্ষণ করুন", statusTitle: "সিস্টেম স্ট্যাটাস", testnetWarn: "টেস্টনেট - আসল সম্পদ পাঠাবেন না", toastCopied: "ক্লিপবোর্ডে কপি করা হয়েছে", toastSaved: "QR কোড সংরক্ষিত", toastError: "কোনো ঠিকানা সেট করা নেই"
+  },
+  ur: {
+    heroBadge: "غیر مرکزی والٹ", heroTitle: "عطیہ<br>پروٹوکول", heroDesc: "اگلی نسل کے کوڈ کی حمایت۔ مکمل طور پر شفاف، مکمل طور پر محفوظ نظام۔", heroMetaText: "تیار کردہ", statAddresses: "پتے", statNetworks: "نیٹ ورکس", statAge: "سال", statSecurity: "کولڈ اسٹوریج", trustTitle: "ہارڈویئر انکرپٹڈ روٹنگ", trustSub: "تمام پتے آف لائن سیف پال کولڈ والیٹ سے تعلق رکھتے ہیں۔ کوئی خطرہ نہیں۔", searchPlaceholder: "نیٹ ورک یا سکہ تلاش کریں...", footerText: "© 2026 HIGER (HALIL GERÇEK)۔ جملہ حقوق محفوظ ہیں۔<br>مالی مشورہ نہیں۔", drawerAddrLabel: "منزل کا پتہ", fiatCalcLabel: "رقم کا حساب لگائیں", fiatApprox: "تقریبا فیاٹ:", btnCopy: "کاپی کریں", btnSave: "QR محفوظ کریں", statusTitle: "سسٹم کی حیثیت", testnetWarn: "ٹیسٹ نیٹ - حقیقی اثاثے مت بھیجیں", toastCopied: "کلپ بورڈ پر کاپی ہو گیا", toastSaved: "QR کوڈ محفوظ ہو گیا", toastError: "کوئی پتہ سیٹ نہیں ہے"
   }
 };

@@ -800,6 +800,37 @@ nav {
   box-shadow: 0 0 15px rgba(0,255,102,0.6);
 }
 
+.wallet-addr-wrap {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 10px;
+  color: var(--mute-color);
+  font-family: var(--font-mono);
+  margin-top: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.wallet-addr-wrap:hover {
+  color: var(--accent-green);
+}
+
+.wallet-addr-short {
+  max-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.3s ease;
+  position: relative;
+  letter-spacing: 0.5px;
+}
+
+.wallet-addr-short:hover {
+  font-weight: 600;
+  text-shadow: 0 0 8px rgba(0, 255, 102, 0.4);
+}
+
 .wallet-action {
   width: 36px; height: 36px;
   display: flex; align-items: center; justify-content: center;

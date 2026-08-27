@@ -325,6 +325,14 @@ class HigerApp {
   }
 
   /**
+   * Shorten wallet address for display
+   */
+  shortenAddress(addr) {
+    if (!addr || addr.length <= 14) return addr;
+    return addr.substring(0, 7) + '...' + addr.substring(addr.length - 7);
+  }
+
+  /**
    * Enhanced wallet rendering with animations
    */
   renderWallets() {
@@ -340,26 +348,29 @@ class HigerApp {
       groupEl.className = 'wallet-group';
       groupEl.style.animation = `fadeInScale 0.6s ease ${groupIdx * 0.1}s both`;
       
-      let rowsHTML = group.items.map((w, itemIdx) => `
+      let rowsHTML = group.items.map((w, itemIdx) => {
+        const shortAddr = this.shortenAddress(w.addr);
+        return `
         <div class="wallet-row" data-search="${(w.name + ' ' + w.ticker + ' ' + w.chain).toLowerCase()}" style="animation: slideInFromRight 0.4s ease ${(groupIdx * 0.05 + itemIdx * 0.02)}s both;">
           <div class="wallet-info">
             <div class="wallet-name">${w.name} <span style="color:var(--mute-color); font-weight:400;">(${w.ticker})</span></div>
             <div class="wallet-chain">${w.chain}</div>
             <div class="wallet-addr-wrap">
               <i class="fas fa-link" style="color:var(--border-light); font-size:10px;"></i>
-              <span class="wallet-addr">${w.addr || 'ADDRESS NOT SET'}</span>
+              <span class="wallet-addr-short" title="${w.addr}" data-full-addr="${w.addr}">${shortAddr}</span>
             </div>
           </div>
           <div class="wallet-actions">
-            <button class="wallet-action" onclick="app.copyToClipboard('${w.addr}', this)" title="Copy Address">
+            <button class="wallet-action copy-btn" onclick="app.copyToClipboard('${w.addr.replace(/'/g, "\\'")}', this)" title="Copy Address" aria-label="Copy wallet address">
               <i class="fas fa-copy"></i>
             </button>
-            <button class="wallet-action" onclick="app.openQRDrawer('${w.name}', '${w.ticker}', '${w.chain}', '${w.scheme}', '${w.addr}')" title="Open QR">
+            <button class="wallet-action qr-btn" onclick="app.openQRDrawer('${w.name.replace(/'/g, "\\'")}', '${w.ticker}', '${w.chain.replace(/'/g, "\\'")}', '${w.scheme}', '${w.addr.replace(/'/g, "\\'")}')" title="Open QR" aria-label="Show QR code">
               <i class="fas fa-qrcode"></i>
             </button>
           </div>
         </div>
-      `).join('');
+      `;
+      }).join('');
 
       let warningHTML = group.isTestnet 
         ? `<div class="testnet-warn" style="animation: slideInFromRight 0.4s ease both;"><i class="fas fa-triangle-exclamation"></i> ${CONFIG.i18n[this.lang]?.testnetWarn || CONFIG.i18n['en'].testnetWarn}</div>` 

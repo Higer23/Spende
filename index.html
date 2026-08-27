@@ -3,51 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>HIGER — Secure Donation Protocol</title>
+<meta name="description" content="HIGER Protocol - Secure Decentralized Donation Protocol with Multi-Chain Support">
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>HIGER — Secure Donation Protocol v4.0</title>
 
 <!-- Fonts: Brutalist & Sharp -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3H7biwRVsklc8DQYvvWeErido3tuQlGWwONss5c9yx8AlwY89yrHTZkIUFUsnslqkWI8DbwGuC" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <!-- External Libraries -->
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.4/html5-qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.4/html5-qrcode.min.js" defer></script>
 
 <!-- CSS Dosyası Bağlantısı -->
 <link rel="stylesheet" href="style.css">
+
+<!-- Preload Critical Resources -->
+<link rel="preload" href="style.css" as="style">
+<link rel="preload" href="app.js" as="script">
+<link rel="preload" href="config.js" as="script">
 </head>
 <body>
 
 <!-- Interactive Canvas Background -->
-<canvas id="bg-canvas"></canvas>
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
 
 <!-- Custom Cursor (Desktop Only) -->
-<div id="custom-cursor"></div>
+<div id="custom-cursor" aria-hidden="true"></div>
 
 <!-- Initial System Loader -->
-<div id="sys-loader">
+<div id="sys-loader" role="status" aria-label="Loading system">
   <div class="loader-brand">HIGER_SYS</div>
   <div class="loader-progress-wrap"><div class="loader-progress-bar" id="loader-bar"></div></div>
   <div class="loader-status" id="loader-status">INITIALIZING...</div>
 </div>
 
 <!-- Navigation -->
-<nav>
+<nav role="navigation" aria-label="Main navigation">
   <div class="nav-inner">
-    <a class="nav-logo" href="#">HIGER <span>PROTOCOL</span></a>
+    <a class="nav-logo" href="#" aria-label="HIGER Protocol Home">HIGER <span>PROTOCOL</span></a>
     <div class="nav-controls">
       <!-- Currency Toggle -->
-      <div class="toggle-group fiat-toggle">
-        <button class="toggle-btn active" onclick="app.setFiat('USD')">USD</button>
-        <button class="toggle-btn" onclick="app.setFiat('EUR')">EUR</button>
-        <button class="toggle-btn" onclick="app.setFiat('GBP')">GBP</button>
+      <div class="toggle-group fiat-toggle" role="group" aria-label="Currency selection">
+        <button class="toggle-btn active" onclick="app.setFiat('USD')" aria-label="US Dollar">USD</button>
+        <button class="toggle-btn" onclick="app.setFiat('EUR')" aria-label="Euro">EUR</button>
+        <button class="toggle-btn" onclick="app.setFiat('GBP')" aria-label="British Pound">GBP</button>
       </div>
-      <!-- Language Toggle (20 Dil İçin Şık Dropdown) -->
-      <div class="toggle-group lang-toggle" style="background: transparent;">
-        <select id="langSelect" onchange="app.setLang(this.value)" class="toggle-btn" style="appearance: none; -webkit-appearance: none; background: transparent; padding-right: 22px; cursor: pointer; outline: none; border: none; background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23777777\' width=\'12px\' height=\'12px\'><path d=\'M7 10l5 5 5-5z\'/></svg>'); background-repeat: no-repeat; background-position: right 6px center;">
+      <!-- Language Toggle -->
+      <div class="toggle-group lang-toggle" role="group" aria-label="Language selection" style="background: transparent;">
+        <select id="langSelect" onchange="app.setLang(this.value)" class="toggle-btn" aria-label="Select language" style="appearance: none; -webkit-appearance: none; background: transparent; padding-right: 22px; cursor: pointer; outline: none; border: none; background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23777777\' width=\'12px\' height=\'12px\'><path d=\'M7 10l5 5 5-5z\'/></svg>'); background-repeat: no-repeat; background-position: right 6px center;">
           <option value="en">EN</option>
           <option value="tr">TR</option>
           <option value="de">DE</option>
@@ -75,21 +84,21 @@
 </nav>
 
 <!-- Main Content -->
-<main>
+<main role="main">
   <!-- Hero Section -->
-  <header class="hero">
+  <header class="hero" data-scroll-animate>
     <div class="hero-badge" data-i18n="heroBadge">DECENTRALIZED VAULT</div>
     <h1 class="hero-title" data-i18n="heroTitle">DONATION<br>PROTOCOL</h1>
     <p class="hero-desc" data-i18n="heroDesc">
       Supporting the next generation of code. Fully transparent, fully secure routing system. No intermediaries.
     </p>
-    <div class="hero-meta">
+    <div class="hero-meta" data-i18n="heroMetaMeta">
       <span data-i18n="heroMetaText">DEVELOPED BY</span> <strong>HALIL GERÇEK (16)</strong>
     </div>
   </header>
 
   <!-- Marquee -->
-  <div class="marquee-wrap">
+  <div class="marquee-wrap" data-scroll-animate>
     <div class="marquee-inner">
       <div class="marquee-item">
         <span>ETHEREUM MAINNET</span><span class="marquee-dot"></span>
@@ -114,7 +123,7 @@
   <div class="container section">
     
     <!-- Stats -->
-    <div class="stats-grid">
+    <div class="stats-grid" data-scroll-animate>
       <div class="stat-box">
         <i class="fas fa-wallet stat-icon"></i>
         <span class="stat-num" id="stat-addr-count">0</span>
@@ -138,7 +147,7 @@
     </div>
 
     <!-- Trust Banner -->
-    <div class="trust-banner">
+    <div class="trust-banner" data-scroll-animate>
       <i class="fas fa-shield-halved trust-icon"></i>
       <div class="trust-content">
         <div class="trust-title" data-i18n="trustTitle">HARDWARE ENCRYPTED ROUTING</div>
@@ -149,19 +158,19 @@
     </div>
 
     <!-- Search -->
-    <div class="search-wrapper">
+    <div class="search-wrapper" data-scroll-animate>
       <i class="fas fa-search"></i>
-      <input type="text" class="search-input" id="searchInput" placeholder="SEARCH NETWORK OR COIN TICKER..." autocomplete="off">
+      <input type="text" class="search-input" id="searchInput" placeholder="SEARCH NETWORK OR COIN TICKER..." autocomplete="off" aria-label="Search wallets">
     </div>
 
     <!-- Wallet List Container -->
-    <div class="wallet-list-container" id="walletsContainer">
+    <div class="wallet-list-container" id="walletsContainer" role="region" aria-label="Wallet addresses">
       <!-- Injected via JS -->
     </div>
   </div>
 
   <!-- Footer -->
-  <footer>
+  <footer role="contentinfo" data-scroll-animate>
     <div class="container">
       <div class="footer-brand">HIGER PROTOCOL</div>
       <div class="footer-text" data-i18n="footerText">
@@ -169,15 +178,19 @@
         NOT FINANCIAL ADVICE. ALL TRANSFERS ARE FINAL ON THE BLOCKCHAIN.
       </div>
       <div class="footer-links">
-        <a href="mailto:higeryazilim@gmail.com" title="Contact"><i class="fas fa-envelope"></i></a>
-        <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+        <a href="mailto:higeryazilim@gmail.com" title="Contact Email" aria-label="Send email to HIGER team">
+          <i class="fas fa-envelope"></i>
+        </a>
+        <a href="#" title="GitHub Repository" aria-label="Visit GitHub repository">
+          <i class="fab fa-github"></i>
+        </a>
       </div>
     </div>
   </footer>
 </main>
 
 <!-- Advanced Side Drawer (Mobile Bottom Sheet) -->
-<div class="drawer-overlay" id="qrDrawer">
+<div class="drawer-overlay" id="qrDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
   <div class="drawer" id="drawerContent">
     
     <div class="drawer-header">
@@ -185,15 +198,15 @@
         <div class="drawer-title" id="drawerTitle">NETWORK</div>
         <div class="drawer-subtitle" id="drawerSubtitle">COIN TICKER</div>
       </div>
-      <button class="drawer-close" id="drawerCloseBtn"><i class="fas fa-times"></i></button>
+      <button class="drawer-close" id="drawerCloseBtn" aria-label="Close drawer"><i class="fas fa-times"></i></button>
     </div>
 
     <div class="drawer-body">
       
       <!-- QR Area -->
       <div class="qr-container" id="qrContainer">
-        <div class="qr-loading" id="qrLoadingIndicator">GENERATING...</div>
-        <div id="qr-canvas-holder">
+        <div class="qr-loading" id="qrLoadingIndicator" aria-live="polite">GENERATING...</div>
+        <div id="qr-canvas-holder" aria-label="QR Code">
           <!-- Will be populated by QR generation code -->
         </div>
       </div>
@@ -212,7 +225,7 @@
         </div>
         
         <div class="input-wrapper">
-          <input type="number" id="cryptoAmountInput" placeholder="0.000" step="any" min="0" inputmode="decimal">
+          <input type="number" id="cryptoAmountInput" placeholder="0.000" step="any" min="0" inputmode="decimal" aria-label="Cryptocurrency amount" title="Enter amount in cryptocurrency">
           <div class="input-ticker" id="inputTickerBadge">COIN</div>
         </div>
         
@@ -221,32 +234,32 @@
           <div class="fiat-result" id="fiatResultDisplay">≈ $0.00 USD</div>
         </div>
 
-        <div class="quick-amounts">
-          <button class="quick-btn" onclick="app.setQuickFiat(10)">$10</button>
-          <button class="quick-btn" onclick="app.setQuickFiat(50)">$50</button>
-          <button class="quick-btn" onclick="app.setQuickFiat(100)">$100</button>
-          <button class="quick-btn" onclick="app.setQuickFiat(500)">$500</button>
+        <div class="quick-amounts" role="group" aria-label="Quick amount buttons">
+          <button class="quick-btn" onclick="app.setQuickFiat(10)" aria-label="Select $10">$10</button>
+          <button class="quick-btn" onclick="app.setQuickFiat(50)" aria-label="Select $50">$50</button>
+          <button class="quick-btn" onclick="app.setQuickFiat(100)" aria-label="Select $100">$100</button>
+          <button class="quick-btn" onclick="app.setQuickFiat(500)" aria-label="Select $500">$500</button>
         </div>
       </div>
     </div>
 
     <div class="drawer-footer">
-      <button class="drawer-action-btn" id="btnCopyDrawer"><i class="fas fa-copy"></i> <span data-i18n="btnCopy">COPY</span></button>
-      <button class="drawer-action-btn primary" id="btnSaveDrawer"><i class="fas fa-download"></i> <span data-i18n="btnSave">SAVE QR</span></button>
+      <button class="drawer-action-btn" id="btnCopyDrawer" aria-label="Copy address to clipboard"><i class="fas fa-copy"></i> <span data-i18n="btnCopy">COPY</span></button>
+      <button class="drawer-action-btn primary" id="btnSaveDrawer" aria-label="Download QR code"><i class="fas fa-download"></i> <span data-i18n="btnSave">SAVE QR</span></button>
     </div>
   </div>
 </div>
 
 <!-- Gas & Status Widget -->
-<div id="status-widget">
-  <div class="status-header" id="statusHeaderToggle">
+<div id="status-widget" role="region" aria-label="System status">
+  <div class="status-header" id="statusHeaderToggle" role="button" tabindex="0" aria-expanded="false" aria-controls="status-body">
     <div class="status-indicator">
-      <div class="pulse-dot" id="systemPulseDot"></div>
+      <div class="pulse-dot" id="systemPulseDot" aria-label="System status indicator"></div>
       <span data-i18n="statusTitle">SYSTEM STATUS</span>
     </div>
-    <i class="fas fa-chevron-up" id="statusChevron" style="transition: transform 0.3s; font-size: 12px;"></i>
+    <i class="fas fa-chevron-up" id="statusChevron" style="transition: transform 0.3s; font-size: 12px;" aria-hidden="true"></i>
   </div>
-  <div class="status-body">
+  <div class="status-body" id="status-body">
     <div class="status-body-inner">
       <div class="status-row"><span>ETH GAS</span><span class="status-val" id="gasEth">FETCHING...</span></div>
       <div class="status-row"><span>BSC GAS</span><span class="status-val" id="gasBsc">FETCHING...</span></div>
@@ -259,12 +272,12 @@
 </div>
 
 <!-- Toast Container -->
-<div id="toast-container"></div>
+<div id="toast-container" role="region" aria-live="polite" aria-atomic="true" aria-label="Notifications"></div>
 
 <!-- Parçalanmış JS Dosyalarının Yüklenmesi -->
-<script src="i18n.js"></script>
-<script src="config.js"></script>
-<script src="app.js"></script>
+<script src="i18n.js" defer></script>
+<script src="config.js" defer></script>
+<script src="app.js" defer></script>
 
 </body>
 </html>

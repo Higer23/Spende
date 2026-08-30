@@ -1,272 +1,580 @@
-<div align="center">
+<div align="center"><img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f0c29,35:302b63,70:4c1d95,100:24243e&height=260&section=header&text=Higer%20%E2%80%A2%20Open-Source%20Lab&fontSize=42&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=Software%20%E2%80%A2%20Hardware%20%E2%80%A2%20IoT%20%E2%80%A2%20Open%20Source&descAlignY=57&descSize=17" width="100%"/><br>👋 Hey, I'm Higer
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f0c29,50:302b63,100:24243e&height=240&section=header&text=Next-Gen%20Open-Source%20Lab&fontSize=38&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=Independent%20Developer%20%E2%80%A2%20Software%20%2B%20Hardware%20%E2%80%A2%20Germany&descAlignY=55&descSize=17" width="100%"/>
+🚀 Independent Developer • Open Source Builder • Hardware Tinkerer
 
-<br>
+I build software, experiment with hardware, and publish the process openly.
 
-<p>
-  <a href="#-english"><img src="https://img.shields.io/badge/EN-English-0a84ff?style=for-the-square&labelColor=1a1a2e" height="26"/></a>
-  <a href="#-t%C3%BCrk%C3%A7e"><img src="https://img.shields.io/badge/TR-Türkçe-0a84ff?style=for-the-square&labelColor=1a1a2e" height="26"/></a>
-  <a href="#-deutsch"><img src="https://img.shields.io/badge/DE-Deutsch-0a84ff?style=for-the-square&labelColor=1a1a2e" height="26"/></a>
-</p>
+From web applications to IoT prototypes — the goal is simple:
 
-<br>
+«Build something useful. Make it open. Let other people build on it.»
 
-<img src="https://img.shields.io/badge/STATUS-ACTIVE%20DEVELOPMENT-2ea44f?style=flat-square&labelColor=0d1117"/>
-<img src="https://img.shields.io/badge/DEVELOPER-INDEPENDENT-8957e5?style=flat-square&labelColor=0d1117"/>
-<img src="https://img.shields.io/badge/LICENSE-MIT-6f42c1?style=flat-square&labelColor=0d1117"/>
-<img src="https://img.shields.io/badge/LOCATION-DÖRVERDEN%2C%20LOWER%20SAXONY-000000?style=flat-square&labelColor=0d1117"/>
-<img src="https://img.shields.io/badge/FUNDING-%2415%20%2F%20%24600-e63950?style=flat-square&labelColor=0d1117"/>
-<img src="https://img.shields.io/badge/AGE-16%20YEARS%20OLD-ff6b6b?style=flat-square&labelColor=0d1117"/>
-<img src="https://img.shields.io/badge/REPOSITORIES-27%2B-4c1d95?style=flat-square&labelColor=0d1117"/>
+<br><a href="https://github.com/Higer23">
+<img src="https://img.shields.io/badge/GitHub-@Higer23-181717?style=for-the-badge&logo=github&logoColor=white"/>
+</a>
+<a href="https://github.com/Higer23?tab=repositories">
+<img src="https://img.shields.io/badge/Repositories-27%2B-8957e5?style=for-the-badge&logo=github&logoColor=white"/>
+</a>
+<a href="#-support-the-lab">
+<img src="https://img.shields.io/badge/❤️_Support_the_Lab-e63950?style=for-the-badge"/>
+</a><br><br>
 
-<br><br>
+<img src="https://img.shields.io/badge/STATUS-ACTIVE%20DEVELOPMENT-2ea44f?style=flat-square"/>
+<img src="https://img.shields.io/badge/DEVELOPER-INDEPENDENT-8957e5?style=flat-square"/>
+<img src="https://img.shields.io/badge/LICENSE-MIT-6f42c1?style=flat-square"/>
+<img src="https://img.shields.io/badge/BASED%20IN-GERMANY-000000?style=flat-square"/>
+<img src="https://img.shields.io/badge/AGE-16-ff6b6b?style=flat-square"/><br><br>
 
 <a href="[YOUR_MINIFUNDER_CAMPAIGN_LINK]">
-  <img src="https://img.shields.io/badge/❤️ SUPPORT THIS PROJECT-e63950?style=for-the-badge&labelColor=1a1a2e" height="45"/>
-</a>
+<img src="https://img.shields.io/badge/🚀%20HELP%20BUILD%20THE%20NEXT%20PROJECT-e63950?style=for-the-badge&labelColor=1a1a2e" height="48"/>
+</a><br><br>
 
-</div>
+«💡 Every contribution helps turn an idea into something people can actually use.»
 
-<br>
+</div>---
 
-<div align="center">
+<div align="center">🌐 Choose your language
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🇬🇧 "English" (#-english)  • 
+🇹🇷 "Türkçe" (#-türkçe)  • 
+🇩🇪 "Deutsch" (#-deutsch)
 
-</div>
+</div>---
 
-<br>
+🇬🇧 English
 
-## 🇬🇧 English
+⚡ Who Am I?
 
-<h3>🚀 About</h3>
+I'm Higer — an independent developer from Dörverden, Lower Saxony, Germany.
 
-I'm **Higer** ([@Higer23](https://github.com/Higer23)), a 16-year-old independent developer from **Dörverden, Lower Saxony, Germany**, building open-source software and hardware prototypes. I focus on **web applications, IoT systems, and automated hardware integration** — turning code into things that physically work, not just run on a screen.
+I work on open-source projects that combine:
 
-Based in a charming riverside town on the Weser (approx. 40km southeast of Bremen), I combine rural innovation with modern tech. Everything here is developed in the open, documented honestly, and released under permissive licensing so other developers can learn from it, use it, or build on it directly.
+💻 Software
+   ↓
+🌐 Web Applications
+   ↓
+⚙️ Automation
+   ↓
+🔌 IoT
+   ↓
+🔧 Hardware
+   ↓
+🌍 Real-world Projects
 
-**Current Projects:**
-- **[Spende](https://github.com/Higer23/Spende)** — Donation/fundraising platform built with JavaScript
-- **27+ active repositories** exploring web, hardware, and software integration
-- 💭 **Bio:** I may be slow to respond, but I'm always working on something exciting!
+I don't want my projects to live only on my computer.
 
-<h3>🎯 Why Funding Matters</h3>
+I want people to be able to see them, use them, learn from them, modify them and build something even better.
 
-<table>
-<tr><td>🌐</td><td><strong>Server Infrastructure</strong><br><sub>Reliable uptime for live demos and hosted tools</sub></td></tr>
-<tr><td>☁️</td><td><strong>Cloud Hosting</strong><br><sub>Scalable hosting as usage grows</sub></td></tr>
-<tr><td>🔧</td><td><strong>Testing Hardware</strong><br><sub>Microcontrollers for hardware-software integration testing</sub></td></tr>
-<tr><td>⏱️</td><td><strong>Development Time</strong><br><sub>Dedicated hours to ship features and fix bugs</sub></td></tr>
-</table>
+Everything possible is developed openly and shared through GitHub.
 
-**Transparency pledge:** every contribution goes directly toward keeping this software stable and free for the public — nothing else.
+---
 
-<h3>📊 Funding Progress — $15 / $600</h3>
+🧪 What I'm Building
 
-```
-[█░░░░░░░░░░░░░░░░░░░░░░░░░░░░░] 2.5%
-```
+<div align="center">Project| What it is| Technology
+🟣 Spende| Donation / fundraising platform| JavaScript
+🌐 Web Projects| Experimental web applications| JS / React / Node
+🔌 IoT Projects| Software + hardware experiments| Arduino / C++
+🤖 Automation| Connecting software with physical systems| Python / Node
+🧪 Experimental Labs| New ideas & prototypes| Various
 
-- [ ] 🌐 Server uptime & reliability
-- [ ] 🔩 Hardware modules for prototyping
-- [ ] 🔒 Domain registration & security
-- [ ] 🛠️ Ongoing maintenance & development
+</div>⭐ Featured Project
 
-<h3>🏆 Wall of Fame</h3>
+<a href="https://github.com/Higer23/Spende"><img src="https://github-readme-stats.vercel.app/api/pin/?username=Higer23&repo=Spende&theme=tokyonight&hide_border=true"/></a>---
 
-<sub>Every name below is a real, verified contribution — no filler entries.</sub>
+❤️ Support the Lab
 
-<div align="center">
+🚀 Why Does Funding Matter?
 
-| 🏅 Rank | Supporter | Contribution | Tier |
-|:---:|:---|:---:|:---:|
-| 🥇 #1 | **Marcus Vance** | $15.00 | 🥉 Bronze Supporter |
+Open-source software may be free for everyone, but building and running it isn't always free.
 
-</div>
-
-<div align="center">
-
-**Founding Supporter slots are still open.** Early backers are permanently credited here — a spot that only exists once.
-
-<a href="[YOUR_MINIFUNDER_CAMPAIGN_LINK]"><img src="https://img.shields.io/badge/🚀 Claim a Founding Spot-e63950?style=for-the-badge&labelColor=1a1a2e"/></a>
-
-<sub>🥉 Bronze $15+ · 🥈 Silver $25+ · 🥇 Gold $35+ · 💎 Platinum $50+</sub>
-
-</div>
-
-<br>
-
-<div align="center">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</div>
-
-<br>
-
-## 🇹🇷 Türkçe
-
-<h3>🚀 Hakkında</h3>
-
-Ben **Higer** ([@Higer23](https://github.com/Higer23)), Almanya'nın Aşağı Saksonya eyaletindeki Dörverden şehrinden 16 yaşında bağımsız bir geliştiriciyim. Açık kaynak yazılım ve donanım prototipleri üzerine çalışıyorum. Odak noktam **web uygulamaları, IoT sistemleri ve otomatik donanım entegrasyonu** — yani sadece ekranda çalışan değil, fiziksel dünyada da işleyen şeyler üretmek.
-
-Weser Nehri'nin kıyısında yer alan bu güzel kasabada (Bremen'in yaklaşık 40km güneydoğusunda), kırsal yenilikçiliğini modern teknolojiyle birleştiriyorum. Buradaki her şey açık şekilde geliştiriliyor, dürüstçe belgeleniyor ve serbest bir lisansla paylaşılıyor; böylece başka geliştiriciler öğrenebilir, kullanabilir veya üzerine inşa edebilir.
-
-**Mevcut Projeler:**
-- **[Spende](https://github.com/Higer23/Spende)** — JavaScript ile inşa edilmiş bağış/finansman platformu
-- **27+ aktif depo** web, donanım ve yazılım entegrasyonu keşfediyor
-- 💭 **Bio:** Bazen yavaş yanıt verebiliyorum, ama her zaman heyecan verici şeyler üzerinde çalışıyorum!
-
-<h3>🎯 Neden Bağış Gerekli</h3>
+A small contribution can help cover things like:
 
 <table>
-<tr><td>🌐</td><td><strong>Sunucu Altyapısı</strong><br><sub>Canlı demolar ve barındırılan araçlar için kesintisiz erişim</sub></td></tr>
-<tr><td>☁️</td><td><strong>Bulut Barındırma</strong><br><sub>Kullanım arttıkça ölçeklenebilir hosting</sub></td></tr>
-<tr><td>🔧</td><td><strong>Test Donanımı</strong><br><sub>Donanım-yazılım entegrasyon testleri için mikrodenetleyiciler</sub></td></tr>
-<tr><td>⏱️</td><td><strong>Geliştirme Zamanı</strong><br><sub>Özellik geliştirme ve hata düzeltme için ayrılan saatler</sub></td></tr>
-</table>
+<tr>
+<td align="center" width="25%">🌐
 
-**Şeffaflık sözü:** Her katkı doğrudan bu yazılımın kararlı ve herkese açık kalmasına gidiyor — başka hiçbir şeye değil.
+Infrastructure
 
-<h3>📊 Bağış İlerlemesi — $15 / $600</h3>
+Servers, uptime and hosting for public projects.
 
-```
-[█░░░░░░░░░░░░░░░░░░░░░░░░░░░░░] %2.5
-```
+</td><td align="center" width="25%">☁️
 
-- [ ] 🌐 Sunucu çalışma süresi ve güvenilirlik
-- [ ] 🔩 Prototipleme için donanım modülleri
-- [ ] 🔒 Alan adı kaydı ve güvenlik
-- [ ] 🛠️ Sürekli bakım ve geliştirme
+Cloud
 
-<h3>🏆 Onur Listesi</h3>
+Storage, deployments and online services.
 
-<sub>Aşağıdaki her isim gerçek ve doğrulanmış bir katkıdır — doldurma satır yok.</sub>
+</td><td align="center" width="25%">🔧
 
-<div align="center">
+Hardware
 
-| 🏅 Sıra | Destekçi | Katkı | Rütbe |
-|:---:|:---|:---:|:---:|
-| 🥇 #1 | **Marcus Vance** | $15.00 | 🥉 Bronz Destekçi |
+Microcontrollers, sensors and prototype components.
 
-</div>
+</td><td align="center" width="25%">⏱️
 
-<div align="center">
+Development
 
-**Kurucu Destekçi yerleri hâlâ açık.** İlk destekçiler burada kalıcı olarak yer alır — bir kez dolan bir yer.
+More time to build, test and maintain projects.
 
-<a href="[YOUR_MINIFUNDER_CAMPAIGN_LINK]"><img src="https://img.shields.io/badge/🚀 Kurucu Yerini Al-e63950?style=for-the-badge&labelColor=1a1a2e"/></a>
+</td>
+</tr>
+</table>---
 
-<sub>🥉 Bronz $15+ · 🥈 Gümüş $25+ · 🥇 Altın $35+ · 💎 Platin $50+</sub>
+📊 Current Funding Goal
 
-</div>
+<div align="center">💰 $15 / $600
 
+2.5% funded
+
+████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  2.5%
+
+🎯 Remaining: $585
+
+</div>Where the goal goes
+
+- [ ] 🌐 Server infrastructure
+- [ ] ☁️ Cloud services
+- [ ] 🔩 Hardware & electronic components
+- [ ] 🔒 Domain & security
+- [ ] 🛠️ Maintenance
+- [ ] 🚀 New open-source projects
+
+«Transparency first: Funding is intended to support development, infrastructure and project-related costs.»
+
+<br><div align="center"><a href="[YOUR_MINIFUNDER_CAMPAIGN_LINK]"><img src="https://img.shields.io/badge/❤️%20SUPPORT%20THE%20PROJECT-e63950?style=for-the-badge&labelColor=1a1a2e" height="52"/></a><br><br>
+
+<sub>
+You don't need to contribute to use the projects.<br>
+Open source remains open source.
+</sub></div>---
+
+🏆 Supporter Wall
+
+<div align="center">🌟 People who help make the lab possible
+
+</div>Every supporter can become part of the project's history.
+
+🏅| Supporter| Contribution| Level
+🥇| Marcus Vance| $15.00| 🥉 Bronze
+
+<br><div align="center">🏅 Supporter Levels
+
+Level| Contribution
+🥉 Bronze| $15+
+🥈 Silver| $25+
+🥇 Gold| $35+
+💎 Platinum| $50+
+
+</div>«💜 Supporter recognition is optional. If someone prefers to remain anonymous, their name will not be displayed.»
+
+<div align="center"><a href="[YOUR_MINIFUNDER_CAMPAIGN_LINK]"><img src="https://img.shields.io/badge/🚀%20BECOME%20A%20SUPPORTER-e63950?style=for-the-badge"/></a></div>---
+
+🗺️ Roadmap
+
+🔴 Current
+
+- [x] 🧪 Start independent open-source development
+- [x] 🌐 Publish projects publicly
+- [x] 🚀 Launch Spende
+- [x] 📦 Build 27+ repositories
+- [ ] 🌐 Improve public infrastructure
+- [ ] 🔧 Expand hardware experiments
+
+🟡 Next
+
+- [ ] 🤖 More automation projects
+- [ ] 🔌 More IoT experiments
+- [ ] 🧪 New hardware prototypes
+- [ ] ☁️ Improve hosting infrastructure
+- [ ] 📚 Better documentation
+- [ ] 🛠️ More developer tools
+
+🟢 Future
+
+- [ ] 🌍 Larger open-source ecosystem
+- [ ] 🤝 Collaborate with other developers
+- [ ] 🔬 Build more ambitious hardware
+- [ ] 🚀 Release larger public projects
+- [ ] 🌐 Make more tools freely available
+
+---
+
+📈 GitHub Activity
+
+<div align="center"><img src="https://github-readme-stats.vercel.app/api?username=Higer23&show_icons=true&theme=tokyonight&hide_border=true&count_private=true"/><br><img src="https://github-readme-streak-stats.herokuapp.com/?user=Higer23&theme=tokyonight&hide_border=true"/><br><img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Higer23&layout=compact&theme=tokyonight&hide_border=true"/></div>---
+
+🧰 Tech Stack
+
+<div align="center">💻 Languages
+
+<img src="https://skillicons.dev/icons?i=js,python,cpp"/>🌐 Web
+
+<img src="https://skillicons.dev/icons?i=react,nextjs,nodejs,html,css"/>🔧 Hardware
+
+<img src="https://skillicons.dev/icons?i=arduino,raspberrypi"/>🛠️ Tools
+
+<img src="https://skillicons.dev/icons?i=git,github,vscode,linux"/></div>---
+
+🧠 My Development Philosophy
+
+<div align="center">Build → Test → Break → Learn → Improve → Release
+
+</div>I believe good projects don't appear perfectly on the first attempt.
+
+They evolve.
+
+Idea
+ │
+ ▼
+Prototype
+ │
+ ▼
+Testing
+ │
+ ├── ❌ Doesn't work
+ │       │
+ │       ▼
+ │     Debug
+ │       │
+ │       └──────────┐
+ │                  │
+ ▼                  │
+Works ◄─────────────┘
+ │
+ ▼
+Open Source
+ │
+ ▼
+Community
+ │
+ ▼
+Better Project
+
+---
+
+🔓 Why Open Source?
+
+Because a project becomes much more valuable when other people can learn from it.
+
+You can:
+
+- 👀 Read the source
+- 🧠 Learn from the implementation
+- 🛠️ Modify it
+- 🐛 Report bugs
+- 💡 Suggest features
+- 🔀 Fork it
+- 🤝 Contribute
+- 🚀 Build something completely different from it
+
+The code belongs to the community as much as possible.
+
+---
+
+🤝 Want to Help Without Donating?
+
+You absolutely can.
+
+⭐ Star a repository
+
+A star helps people discover the project.
+
+🐛 Report a bug
+
+Found something broken?
+
+Tell me.
+
+💡 Suggest an idea
+
+Your idea could become the next feature.
+
+🔀 Contribute
+
+Pull requests are welcome.
+
+📢 Share
+
+Sharing an open-source project can be just as valuable as financial support.
+
+«Not everyone can donate money. Everyone can help in some way. ❤️»
+
+---
+
+❓ FAQ
+
+<details>
+<summary><b>💰 Why are you asking for funding?</b></summary><br>Open-source development can involve real costs such as hosting, domains, hardware, testing equipment and development infrastructure.
+
+Funding helps keep projects running and gives me more resources to experiment and build.
+
+</details><details>
+<summary><b>🔓 Will the projects remain open source?</b></summary><br>The projects covered by open-source licenses will remain available under their respective licenses.
+
+</details><details>
+<summary><b>💵 Do I have to donate?</b></summary><br>No.
+
+You can use the projects, star repositories, report bugs, suggest ideas or simply share them.
+
+Every form of support is appreciated.
+
+</details><details>
+<summary><b>🏆 What happens if I donate?</b></summary><br>Depending on the contribution and whether you want recognition, supporters may be listed on the Supporter Wall.
+
+Anonymous support is always welcome.
+
+</details><details>
+<summary><b>📊 Where does the money go?</b></summary><br>The current goal is intended for project-related expenses such as infrastructure, hosting, hardware, domains, security and development.
+
+</details><details>
+<summary><b>🧑‍💻 Can I contribute code?</b></summary><br>Yes.
+
+Open an issue, fork a repository and submit a pull request.
+
+</details>---
+
+🌍 About Dörverden
+
+<div align="center">🇩🇪 Dörverden • Lower Saxony • Germany
+
+</div>I'm developing from Dörverden, a municipality in Lower Saxony near the Weser River.
+
+It's a very different environment from the big technology hubs.
+
+And that's part of the point.
+
+«You don't need to live in Silicon Valley to build technology.»
+
+You need curiosity, a computer, persistence and the willingness to keep learning.
+
+---
+
+📍 Location
+
+🇩🇪 Germany
+└── Niedersachsen
+    └── Landkreis Verden
+        └── Dörverden
+
+---
+
+📱 Connect
+
+<div align="center"><a href="https://github.com/Higer23">
+<img src="https://img.shields.io/badge/GitHub-@Higer23-181717?style=for-the-badge&logo=github"/>
+</a><a href="https://www.instagram.com/higer.23">
+<img src="https://img.shields.io/badge/Instagram-@higer.23-E4405F?style=for-the-badge&logo=instagram"/>
+</a><a href="[YOUR_MINIFUNDER_CAMPAIGN_LINK]">
+<img src="https://img.shields.io/badge/Minifunder-Support-e63950?style=for-the-badge"/>
+</a></div>---
+
+🇹🇷 Türkçe
+
+🚀 Ben Kimim?
+
+Ben Higer — Almanya'nın Aşağı Saksonya eyaletindeki Dörverden bölgesinden bağımsız bir geliştiriciyim.
+
+Açık kaynak yazılım, web uygulamaları, IoT sistemleri ve donanım prototipleri geliştiriyorum.
+
+Amacım sadece bilgisayarımda çalışan projeler yapmak değil.
+
+Fikirleri gerçek çalışan projelere dönüştürmek ve bunları mümkün olduğunca açık şekilde paylaşmak.
+
+---
+
+🧪 Neler Yapıyorum?
+
+- 🌐 Web uygulamaları
+- 💻 Açık kaynak yazılımlar
+- 🔌 IoT sistemleri
+- 🤖 Otomasyon
+- 🔧 Donanım prototipleri
+- 🧪 Deneysel projeler
+- 🚀 Yeni teknoloji fikirleri
+
+⭐ Öne Çıkan Proje
+
+"Spende" (https://github.com/Higer23/Spende) — JavaScript ile geliştirilmiş bağış / finansman platformu.
+
+Ayrıca GitHub üzerinde 27+ repository bulunuyor.
+
+---
+
+❤️ Neden Bağış?
+
+Açık kaynak projeler ücretsiz olabilir fakat geliştirme sırasında:
+
+- 🌐 Sunucu
+- ☁️ Cloud
+- 🔒 Domain
+- 🔧 Donanım
+- 🧪 Test ekipmanları
+- ⏱️ Geliştirme zamanı
+
+gibi gerçek maliyetler ortaya çıkabilir.
+
+Destekler bu projelerin geliştirilmesine ve sürdürülebilmesine yardımcı olur.
+
+🎯 Hedef: $600
+
+Şu ana kadar: $15
+
+████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  2.5%
+
+<div align="center"><a href="[YOUR_MINIFUNDER_CAMPAIGN_LINK]"><img src="https://img.shields.io/badge/❤️%20PROJEYİ%20DESTEKLE-e63950?style=for-the-badge"/></a></div>---
+
+🏆 Destekçi Duvarı
+
+🏅| Destekçi| Katkı| Seviye
+🥇| Marcus Vance| $15.00| 🥉 Bronz
+
+🥉 $15+ Bronze
+
+🥈 $25+ Silver
+
+🥇 $35+ Gold
+
+💎 $50+ Platinum
+
+«İsim görünürlüğü isteğe bağlıdır. Anonim destek tamamen mümkündür.»
+
+---
+
+🤝 Para Vermeden Nasıl Destek Olabilirsin?
+
+⭐ Repository'leri yıldızla.
+
+🐛 Hata bildir.
+
+💡 Fikir öner.
+
+🔀 Kod katkısı yap.
+
+📢 Projeleri paylaş.
+
+Destek sadece para değildir. ❤️
+
+---
+
+🗺️ Yol Haritası
+
+- [x] 🌐 Açık kaynak geliştirmeye başla
+- [x] 📦 27+ repository
+- [x] 🚀 Spende
+- [ ] 🔧 Daha fazla donanım projesi
+- [ ] 🔌 Daha fazla IoT projesi
+- [ ] 🤖 Daha fazla otomasyon
+- [ ] ☁️ Daha güçlü altyapı
+- [ ] 🌍 Daha büyük açık kaynak projeleri
+
+---
+
+🇩🇪 Deutsch
+
+👋 Über mich
+
+Ich bin Higer, ein unabhängiger Entwickler aus Dörverden, Niedersachsen.
+
+Ich entwickle Open-Source-Software, Webanwendungen, IoT-Systeme und Hardware-Prototypen.
+
+Mein Ziel:
+
+«Ideen nicht nur planen, sondern bauen, testen und veröffentlichen.»
+
+---
+
+🧪 Was ich entwickle
+
+- 🌐 Webanwendungen
+- 💻 Open-Source-Software
+- 🔌 IoT
+- 🤖 Automatisierung
+- 🔧 Hardware-Prototypen
+- 🧪 Experimente
+- 🚀 Neue technische Projekte
+
+⭐ Projekt
+
+"Spende" (https://github.com/Higer23/Spende) — eine mit JavaScript entwickelte Spenden-/Finanzierungsplattform.
+
+Außerdem gibt es 27+ öffentliche Repositories.
+
+---
+
+❤️ Unterstützung
+
+Open Source ist kostenlos nutzbar, aber Entwicklung verursacht trotzdem Kosten.
+
+Zum Beispiel:
+
+🌐 Server
+☁️ Cloud
+🔒 Domains & Sicherheit
+🔧 Hardware
+🧪 Testequipment
+⏱️ Entwicklungszeit
+
+🎯 Finanzierungsziel: $600
+
+Aktuell: $15
+
+████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  2,5%
+
+<div align="center"><a href="[YOUR_MINIFUNDER_CAMPAIGN_LINK]"><img src="https://img.shields.io/badge/❤️%20PROJEKT%20UNTERSTÜTZEN-e63950?style=for-the-badge"/></a></div>---
+
+🏆 Unterstützer
+
+🏅| Unterstützer| Beitrag| Stufe
+🥇| Marcus Vance| $15.00| 🥉 Bronze
+
+🥉 Bronze: $15+
+🥈 Silber: $25+
+🥇 Gold: $35+
+💎 Platin: $50+
+
+Anonyme Unterstützung ist selbstverständlich möglich.
+
+---
+
+🤝 Du möchtest helfen, aber nicht spenden?
+
+Kein Problem.
+
+⭐ Starte ein Repository.
+
+🐛 Melde einen Fehler.
+
+💡 Schlage eine Funktion vor.
+
+🔀 Sende einen Pull Request.
+
+📢 Teile ein Projekt.
+
+Jede Unterstützung zählt.
+
+---
+
+🌍 Open Source • Built in Germany
+
+<div align="center">╔══════════════════════════════════════════════╗
+║                                              ║
+║       BUILD SOMETHING. SHARE SOMETHING.      ║
+║                                              ║
+║              LEARN • CREATE • REPEAT         ║
+║                                              ║
+╚══════════════════════════════════════════════╝
+
+🛠️ Built transparently
+
+🌍 Published openly
+
+🚀 One commit at a time
+
+<br><a href="https://github.com/Higer23"><img src="https://img.shields.io/badge/⭐%20EXPLORE%20MY%20PROJECTS-8957e5?style=for-the-badge&logo=github"/></a> 
+
+<a href="[YOUR_MINIFUNDER_CAMPAIGN_LINK]"><img src="https://img.shields.io/badge/❤️%20HELP%20BUILD%20THE%20NEXT%20ONE-e63950?style=for-the-badge"/></a><br><br>
+
+<sub>🇩🇪 Dörverden, Niedersachsen, Deutschland
 <br>
+💻 Independent Developer • Open Source • Software + Hardware
 
-<div align="center">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</div>
-
-<br>
-
-## 🇩🇪 Deutsch
-
-<h3>🚀 Über mich</h3>
-
-Ich bin **Higer** ([@Higer23](https://github.com/Higer23)), ein 16-jähriger unabhängiger Entwickler aus **Dörverden, Niedersachsen, Deutschland**. Ich arbeite an Open-Source-Software und Hardware-Prototypen mit Fokus auf **Webanwendungen, IoT-Systeme und automatisierte Hardware-Integration** — Code, der nicht nur auf dem Bildschirm läuft, sondern in der physischen Welt funktioniert.
-
-In einem charmanten Flecken an den Ufern der Weser (ca. 40 km südöstlich von Bremen) verbinde ich ländliche Innovation mit moderner Technologie. Alles hier wird offen entwickelt, ehrlich dokumentiert und unter einer freizügigen Lizenz veröffentlicht, damit andere Entwickler daraus lernen, es nutzen oder darauf aufbauen können.
-
-**Aktuelle Projekte:**
-- **[Spende](https://github.com/Higer23/Spende)** — Spendenplattform mit JavaScript gebaut
-- **27+ aktive Repositories** erkunden Web-, Hardware- und Softwareintegration
-- 💭 **Bio:** Ich antworte manchmal langsam, aber ich arbeite immer an etwas Spannendem!
-
-<h3>🎯 Warum Unterstützung wichtig ist</h3>
-
-<table>
-<tr><td>🌐</td><td><strong>Server-Infrastruktur</strong><br><sub>Zuverlässige Verfügbarkeit für Live-Demos und Tools</sub></td></tr>
-<tr><td>☁️</td><td><strong>Cloud-Hosting</strong><br><sub>Skalierbares Hosting bei wachsender Nutzung</sub></td></tr>
-<tr><td>🔧</td><td><strong>Testhardware</strong><br><sub>Mikrocontroller für Hardware-Software-Integrationstests</sub></td></tr>
-<tr><td>⏱️</td><td><strong>Entwicklungszeit</strong><br><sub>Feste Stunden für neue Features und Bugfixes</sub></td></tr>
-</table>
-
-**Transparenzversprechen:** Jeder Beitrag fließt direkt in die Stabilität und freie Verfügbarkeit dieser Software — in nichts anderes.
-
-<h3>📊 Finanzierungsstand — $15 / $600</h3>
-
-```
-[█░░░░░░░░░░░░░░░░░░░░░░░░░░░░░] 2,5%
-```
-
-- [ ] 🌐 Serverlaufzeit & Zuverlässigkeit
-- [ ] 🔩 Hardware-Module für Prototypen
-- [ ] 🔒 Domain-Registrierung & Sicherheit
-- [ ] 🛠️ Laufende Wartung & Entwicklung
-
-<h3>🏆 Ehrentafel</h3>
-
-<sub>Jeder Name unten ist ein echter, verifizierter Beitrag — keine Platzhalter.</sub>
-
-<div align="center">
-
-| 🏅 Rang | Unterstützer | Beitrag | Stufe |
-|:---:|:---|:---:|:---:|
-| 🥇 #1 | **Marcus Vance** | $15.00 | 🥉 Bronze-Unterstützer |
-
-</div>
-
-<div align="center">
-
-**Gründungsunterstützer-Plätze sind noch frei.** Frühe Unterstützer werden dauerhaft hier verewigt — ein Platz, den es nur einmal gibt.
-
-<a href="[YOUR_MINIFUNDER_CAMPAIGN_LINK]"><img src="https://img.shields.io/badge/🚀 Gründungsplatz sichern-e63950?style=for-the-badge&labelColor=1a1a2e"/></a>
-
-<sub>🥉 Bronze $15+ · 🥈 Silber $25+ · 🥇 Gold $35+ · 💎 Platin $50+</sub>
-
-</div>
-
-<br>
-
-<div align="center">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</div>
-
-<br>
-
-<div align="center">
-
-### 🛠️ Tech Stack
-
-![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
-![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white)
-![C++](https://img.shields.io/badge/-C++-00599C?style=flat-square&logo=cplusplus&logoColor=white)
-![Arduino](https://img.shields.io/badge/-Arduino-00979D?style=flat-square&logo=arduino&logoColor=white)
-![Raspberry Pi](https://img.shields.io/badge/-Raspberry%20Pi-A22846?style=flat-square&logo=raspberrypi&logoColor=white)
-![Node.js](https://img.shields.io/badge/-Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white)
-![React](https://img.shields.io/badge/-React-61DAFB?style=flat-square&logo=react&logoColor=black)
-![Git](https://img.shields.io/badge/-Git-F05032?style=flat-square&logo=git&logoColor=white)
-
-<br>
-
-### 🌍 About Dörverden
-
-**Dörverden** is a charming municipality in the district of Verden, Lower Saxony, situated on the right bank of the Weser River, approximately 40 km southeast of Bremen. This picturesque town is known for:
-
-- 🐺 **Wolf Center** — A unique wildlife attraction where visitors can observe native wolves in their natural habitat on guided 50-minute tours
-- 🌾 **Asparagus Heartland** — One of Germany's primary asparagus-growing regions, contributing significantly to Lower Saxony's agricultural economy
-- 🚴 **Cycling Culture** — Perfect for bike tours along the scenic Weser River valley
-- 🏘️ **Historic Charm** — Traditional timber-framed Fachwerk houses and cobblestone streets preserving centuries of culture
-- 📊 **Vital Community** — Population of ~8,700 | Postal Code: 27313 | Time Zone: UTC+1 (CEST in summer)
-
-**Why Dörverden for Tech Development?**
-
-Rural innovation meets reliable infrastructure—fewer distractions, excellent internet connectivity, and a close-knit community that genuinely supports independent builders and makers.
-
-<br>
-
-### 📱 Connect With Me
-
-[![GitHub](https://img.shields.io/badge/GitHub-@Higer23-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/Higer23)
-[![Instagram](https://img.shields.io/badge/Instagram-@higer.23-E4405F?style=flat-square&logo=instagram&logoColor=white)](https://www.instagram.com/higer.23?igsh=MXVocXQ0MXZsZmp2Zw==)
-[![Minifunder](https://img.shields.io/badge/Minifunder-Support-e63950?style=flat-square)]([YOUR_MINIFUNDER_CAMPAIGN_LINK])
-
-<br>
-
-<sub>Built transparently, in the open, one commit at a time. 🇩🇪 **Dörverden, Niedersachsen, Deutschland**</sub>
-
-</div>
- 
+</sub></div>
